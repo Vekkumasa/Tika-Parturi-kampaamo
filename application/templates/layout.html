@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Parturi-Kampaamo</title>
+  </head>
+
+  <body>
+
+    <ul>
+      <li><a href="{{ url_for('kampaaja_index') }}">Listaa kampaajat</a></li>
+      <li><a href="{{ url_for('kampaaja_form') }}">Lisää kampaaja</a></li>
+    </ul>
+
+    {% block body %}
+      <p>
+        Content.
+      </p>
+    {% endblock %}
+  </body>
+</html>

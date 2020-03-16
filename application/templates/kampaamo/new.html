@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('kampaaja_create') }}">
+    <label for="firstName">First name:</label><br>
+    <input id="firstName" type="text" name="firstName"/><br>
+    <label for="lastName">Last name:</label><br>
+    <input id="lastName" type="text" name="lastName"/><br>
+    <input type="submit" value="Lisää kampaaja"/>
+</form>
+{% endblock %}
