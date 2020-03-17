@@ -9,6 +9,8 @@ Kampaajilla on monta varausta ja varaukseen liittyy yksi kampaaja.
 Ketjulla on monta kampaajaa ja jokainen kampaaja voi toimia missä vain toimipisteessä.
 
 [Linkki herokuun](https://parturi-kampaamo20.herokuapp.com/)
+
 [Linkki tietokantakaavioon](https://github.com/Vekkumasa/Tika-Parturi-kampaamo/blob/master/documentation/tietokantakaavio.jpg)
+
 [Linkki käyttötapauksiin](https://github.com/Vekkumasa/Tika-Parturi-kampaamo/blob/master/documentation/k%C3%A4ytt%C3%B6tapaukset.md)
 
