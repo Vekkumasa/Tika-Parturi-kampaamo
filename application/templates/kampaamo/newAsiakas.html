@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('kampaaja_create') }}">
+<form method="POST" action="{{ url_for('asiakas_create') }}">
     <table>
         <tr>
             <td>
@@ -20,10 +20,25 @@
             <td>
                 {{ form.lastName.label }}
             </td>
-            <td> {{ form.lastName }}</td>
+            <td>
+                {{ form.lastName }}
+            </td>
+            <td>
+                {% for error in form.lastName.errors %}
+                <li> {{ error }} </li>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.phoneNumber.label }}
+            </td>
+            <td>
+                {{ form.phoneNumber }}
+            </td>
         </tr>
         <td colspan="2">
-            <input type="submit" value="Lisää kampaaja"/>
+            <input type="submit" value="Lisää asiakas"/>
         </td>
     </table>
 </form>

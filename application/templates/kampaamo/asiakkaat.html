@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>First name </th>
+            <th>Last name </th>
+            <th>Phone number </th>
+        </tr>
+
+        {% for asiakas in asiakkaat %}
+        <tr>
+            <td>{{ asiakas.firstName }}</td>
+            <td>{{ asiakas.lastName }}</td>
+            {% if asiakas.phoneNumber %}
+                <td>{{ asiakas.phoneNumber }}</td>
+            {% else %}
+                <td>testi</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

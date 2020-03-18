@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('kampaaja_create') }}">
+    <table>
+        <tr>
+            <td>
+                {{ form.firstName.label }}
+            </td>
+            <td>
+                {{ form.firstName }}
+            </td>
+            <td>
+                {% for error in form.firstName.errors %}
+                <li> {{ error }} </li>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.lastName.label }}
+            </td>
+            <td>
+                {{ form.lastName }}
+            </td>
+            <td>
+                {% for error in form.lastName.errors %}
+                <li> {{ error }} </li>
+                {% endfor %}
+            </td>
+        </tr>
+        <td colspan="2">
+            <input type="submit" value="Lisää kampaaja"/>
+        </td>
+    </table>
+</form>
+{% endblock %}

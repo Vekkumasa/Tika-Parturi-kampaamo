@@ -1,8 +1,8 @@
 from application import app, db
 from flask import redirect, url_for, render_template, request
 
-from application.kampaamo.models import Kampaaja
-from application.kampaamo.forms import KampaajaForm
+from application.kampaamo.models import Kampaaja, Asiakas
+from application.kampaamo.forms import KampaajaForm, AsiakasForm
 
 @app.route("/kampaaja/", methods=["GET"])
 def kampaaja_index():
@@ -10,7 +10,7 @@ def kampaaja_index():
 
 @app.route("/kampaaja/new/")
 def kampaaja_form():
-    return render_template("kampaamo/new.html", form = KampaajaForm())
+    return render_template("kampaamo/newKampaaja.html", form = KampaajaForm())
 
 @app.route("/kampaaja/", methods=["POST"])
 def kampaaja_create():
@@ -18,11 +18,31 @@ def kampaaja_create():
     form = KampaajaForm(request.form)
 
     if not form.validate():
-        return render_template("kampaamo/new.html", form = form)
+        return render_template("kampaamo/newKampaaja.html", form = form)
 
     k = Kampaaja(form.firstName.data, form.lastName.data)
 
     db.session().add(k)
+    db.session().commit()
+
+    return redirect(url_for("kampaaja_index"))
+
+@app.route("/asiakas/", methods=["GET"])
+def asiakas_index():
+    return render_template("kampaamo/asiakkaat.html", asiakkaat=Asiakas.query.all())
+
+@app.route("/asiakas/new/")
+def asiakas_form():
+    return render_template("kampaamo/newAsiakas.html", form = AsiakasForm())
+
+@app.route("/asiakas/", methods=["POST"])
+def asiakas_create():
+
+    form = AsiakasForm(request.form)
+
+    a = Asiakas(form.firstName.data, form.lastName.data, form.phoneNumber.data)
+
+    db.session().add(a)
     db.session().commit()
 
     return redirect(url_for("kampaaja_index"))
