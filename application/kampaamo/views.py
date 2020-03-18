@@ -56,3 +56,7 @@ def asiakas_change_number(asiakas_id):
     db.session().commit()
 
     return redirect(url_for("asiakas_index"))
+
+@app.route("/asiakas/<asiakas_id>", methods=["GET"])
+def asiakas_show(asiakas_id):
+    return render_template("kampaamo/singleAsiakas.html", asiakas=Asiakas.query.get(asiakas_id))

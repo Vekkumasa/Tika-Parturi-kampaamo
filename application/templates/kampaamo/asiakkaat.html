@@ -3,14 +3,14 @@
 {% block body %}
     <table>
         <tr>
-            <th>First name </th>
-            <th>Last name </th>
-            <th>Phone number </th>
+            <th>First name &nbsp;</th>
+            <th>Last name &nbsp;</th>
+            <th>Phone number &nbsp;</th>
         </tr>
 
         {% for asiakas in asiakkaat %}
         <tr>
-            <td>{{ asiakas.firstName }}</td>
+            <td><a href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.firstName }}</a></td>
             <td>{{ asiakas.lastName }}</td>
             {% if asiakas.phoneNumber %}
                 <td>{{ asiakas.phoneNumber }}</td>
