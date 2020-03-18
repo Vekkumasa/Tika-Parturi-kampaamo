@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, url_for, render_template, request
 
 from application.kampaamo.models import Kampaaja, Asiakas
-from application.kampaamo.forms import KampaajaForm, AsiakasForm
+from application.kampaamo.forms import KampaajaForm, AsiakasForm, EditForm
 
 @app.route("/kampaaja/", methods=["GET"])
 def kampaaja_index():
@@ -29,7 +29,7 @@ def kampaaja_create():
 
 @app.route("/asiakas/", methods=["GET"])
 def asiakas_index():
-    return render_template("kampaamo/asiakkaat.html", asiakkaat=Asiakas.query.all())
+    return render_template("kampaamo/asiakkaat.html", asiakkaat=Asiakas.query.all(), form = EditForm)
 
 @app.route("/asiakas/new/")
 def asiakas_form():
@@ -45,4 +45,14 @@ def asiakas_create():
     db.session().add(a)
     db.session().commit()
 
-    return redirect(url_for("kampaaja_index"))
+    return redirect(url_for("asiakas_index"))
+
+@app.route("/asiakas/<asiakas_id>/", methods=["POST"])
+def asiakas_change_number(asiakas_id):
+    
+    number = request.form.get("number")
+    a = Asiakas.query.get(asiakas_id)
+    a.phoneNumber = number
+    db.session().commit()
+
+    return redirect(url_for("asiakas_index"))

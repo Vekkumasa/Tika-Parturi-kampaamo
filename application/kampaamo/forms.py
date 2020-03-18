@@ -15,3 +15,9 @@ class AsiakasForm(FlaskForm):
 
     class Meta:
         csrf = False
+
+class EditForm(FlaskForm):
+    phoneNumber = StringField("Phone number")
+
+    class Meta:
+        csrf = False
