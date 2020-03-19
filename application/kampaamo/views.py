@@ -1,7 +1,8 @@
-from application import app, db
 from flask import redirect, url_for, render_template, request
+from flask_login import login_required
 
-from application.kampaamo.models import Kampaaja, Asiakas
+from application import app, db
+from application.kampaamo.models import Kampaaja, Asiakas, Varaus
 from application.kampaamo.forms import KampaajaForm, AsiakasForm, EditForm
 
 @app.route("/kampaaja/", methods=["GET"])
@@ -11,6 +12,24 @@ def kampaaja_index():
 @app.route("/kampaaja/new/")
 def kampaaja_form():
     return render_template("kampaamo/newKampaaja.html", form = KampaajaForm())
+
+@app.route("/kampaaja/<kampaaja_id>", methods=["GET"])
+def kampaaja_show(kampaaja_id):
+    return render_template("kampaamo/singleKampaaja.html", kampaaja=Kampaaja.query.get(kampaaja_id))
+
+@app.route("/kampaaja/<kampaaja_id>", methods=["POST"])
+def create_varaus(kampaaja_id):
+
+    a = Asiakas.query.get(request.form.get("asiakas_id"))
+    v = Varaus()
+
+    v.kampaaja_id = kampaaja_id
+    v.asiakas_id = a.id
+
+    db.session.add(v)
+    db.session.commit()
+
+    return redirect(url_for("kampaaja_index"))
 
 @app.route("/kampaaja/", methods=["POST"])
 def kampaaja_create():
