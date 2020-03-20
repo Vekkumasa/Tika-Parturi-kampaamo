@@ -2,20 +2,23 @@ from flask import redirect, url_for, render_template, request
 from flask_login import login_required
 
 from application import app, db
-from application.kampaamo.models import Kampaaja, Asiakas, Varaus
+from application.kampaamo.models import Asiakas, Varaus
 from application.kampaamo.forms import KampaajaForm, AsiakasForm, EditForm
+from application.auth.models import User
 
 @app.route("/kampaaja/", methods=["GET"])
 def kampaaja_index():
-    return render_template("kampaamo/list.html", kampaajat=Kampaaja.query.all())
+    return render_template("kampaamo/list.html", kampaajat=User.query.all())
 
 @app.route("/kampaaja/new/")
+@login_required
 def kampaaja_form():
     return render_template("kampaamo/newKampaaja.html", form = KampaajaForm())
 
 @app.route("/kampaaja/<kampaaja_id>", methods=["GET"])
 def kampaaja_show(kampaaja_id):
-    return render_template("kampaamo/singleKampaaja.html", kampaaja=Kampaaja.query.get(kampaaja_id))
+    return render_template("kampaamo/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id))
+
 
 @app.route("/kampaaja/<kampaaja_id>", methods=["POST"])
 def create_varaus(kampaaja_id):
@@ -24,14 +27,16 @@ def create_varaus(kampaaja_id):
     v = Varaus()
 
     v.kampaaja_id = kampaaja_id
-    v.asiakas_id = a.id
+    v.asiakas_id = a.phoneNumber
 
     db.session.add(v)
     db.session.commit()
 
     return redirect(url_for("kampaaja_index"))
 
+
 @app.route("/kampaaja/", methods=["POST"])
+@login_required
 def kampaaja_create():
 
     form = KampaajaForm(request.form)
@@ -39,12 +44,13 @@ def kampaaja_create():
     if not form.validate():
         return render_template("kampaamo/newKampaaja.html", form = form)
 
-    k = Kampaaja(form.firstName.data, form.lastName.data)
+    k = User(form.name.data, form.username.data, form.password.data)
 
     db.session().add(k)
     db.session().commit()
 
     return redirect(url_for("kampaaja_index"))
+
 
 @app.route("/asiakas/", methods=["GET"])
 def asiakas_index():
@@ -58,6 +64,14 @@ def asiakas_form():
 def asiakas_create():
 
     form = AsiakasForm(request.form)
+
+    if not form.validate():
+        return render_template("kampaamo/newAsiakas.html", form = form)
+
+    asiakas = Asiakas.query.get(form.phoneNumber.data)
+
+    if asiakas:
+        return render_template("kampaamo/newAsiakas.html", form = form, uniikki = "Puhelinnumero on jo käytössä")
 
     a = Asiakas(form.firstName.data, form.lastName.data, form.phoneNumber.data)
 

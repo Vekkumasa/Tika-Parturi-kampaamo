@@ -36,6 +36,14 @@
             <td>
                 {{ form.phoneNumber }}
             </td>
+            <td>
+                {% for error in form.phoneNumber.errors %}
+                <li> {{ error }} </li>
+                {% endfor %}
+            </td>
+            <td>
+                {{ uniikki }}
+            </td>
         </tr>
         <td colspan="2">
             <input type="submit" value="Lisää asiakas"/>

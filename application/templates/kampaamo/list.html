@@ -3,14 +3,12 @@
 {% block body %}
     <table>
         <tr>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Name</th>
         </tr>
 
         {% for kampaaja in kampaajat %}
         <tr>
-            <td><a href="{{ url_for('kampaaja_show', kampaaja_id=kampaaja.id) }}"> {{ kampaaja.firstName }}</a></td>
-            <td>{{ kampaaja.lastName }}</td>
+            <td><a href="{{ url_for('kampaaja_show', kampaaja_id=kampaaja.id) }}"> {{ kampaaja.name }}</a></td>
         </tr>
         {% endfor %}
     </table>

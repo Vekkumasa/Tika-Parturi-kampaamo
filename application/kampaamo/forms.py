@@ -1,23 +1,31 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators
+from wtforms import StringField, PasswordField, validators
+from wtforms.fields.html5 import DateField
 
 class KampaajaForm(FlaskForm):
-    firstName = StringField("First name", [validators.Length(min=3)])
-    lastName = StringField("Last name", [validators.Length(min=3)])
-
+    name = StringField("Full name", [validators.Length(min=3)])
+    username = StringField("Username", [validators.Length(min=3)])
+    password = PasswordField("Password", [validators.Length(min=3)])
+    
     class Meta:
         csrf = False
 
 class AsiakasForm(FlaskForm):
     firstName = StringField("First name", [validators.Length(min=3)])
     lastName = StringField("Last name", [validators.Length(min=3)])
-    phoneNumber = StringField("Phone number")
+    phoneNumber = StringField("Phone number", [validators.Length(min=3)])
 
     class Meta:
         csrf = False
 
 class EditForm(FlaskForm):
     phoneNumber = StringField("Phone number")
+
+    class Meta:
+        csrf = False
+
+class VarausForm(FlaskForm):
+    dt = DateField('DatePicker', format='%D-%m-%y')
 
     class Meta:
         csrf = False

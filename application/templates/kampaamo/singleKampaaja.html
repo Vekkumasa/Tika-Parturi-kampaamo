@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    Etunimi: {{ kampaaja.firstName }} <br>
-    Sukunimi: {{ kampaaja.lastName }} <br>
+    Nimi: {{ kampaaja.name }} <br>
     <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id) }}">
         <input type="text" name="asiakas_id"/>
         <input type="submit" value="Tee varaus"/>
