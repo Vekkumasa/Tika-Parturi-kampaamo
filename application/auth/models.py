@@ -14,7 +14,8 @@ class User(db.Model):
     password = db.Column(db.String(144), nullable=False)
 
     varaukset = db.relationship("Varaus", backref='Kampaaja', lazy=True)
-
+    vapaat_ajat = db.relationship("Aika", backref='Kampaaja', lazy=True)
+    
     def __init__(self, name, username, password):
         self.name = name
         self.username = username

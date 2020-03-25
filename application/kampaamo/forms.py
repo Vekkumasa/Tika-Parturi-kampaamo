@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, validators
+from wtforms import StringField, PasswordField, IntegerField, validators
 from wtforms.fields.html5 import DateField
+from wtforms.validators import NumberRange
 
 class KampaajaForm(FlaskForm):
     name = StringField("Full name", [validators.Length(min=3)])
@@ -27,5 +28,13 @@ class EditForm(FlaskForm):
 class VarausForm(FlaskForm):
     date = DateField('DatePicker', format='%Y-%m-%d')
     phoneNumber = StringField("Puhelinnumero", [validators.Length(min=3)])
+    class Meta:
+        csrf = False
+
+class AikaForm(FlaskForm):
+    pvm = DateField('DatePicker', format='%Y-%m-%d')
+    aika_h = IntegerField("Hour", validators=[NumberRange(min=0, max=24, message='bla')])
+    aika_min = IntegerField("Minutes", validators=[NumberRange(min=0, max=60, message='blabla')])
+
     class Meta:
         csrf = False

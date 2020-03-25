@@ -10,7 +10,7 @@
 
     {% if current_user.is_authenticated %}
     <p>
-      Kirjautunut nimellä {{ current_user.name }}. &nbsp; <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
+      Kirjautunut nimellä {{ current_user.name }}. &nbsp; <a href="{{ url_for('aika', kampaaja_id=current_user.id) }}"> Lisää vapaa aika </a>  &nbsp; <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
     </p>
     {% else %}
     <a href="{{ url_for('auth_login') }}">Kirjaudu</a>

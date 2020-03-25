@@ -2,25 +2,38 @@
 
 {% block body %}
     Nimi: {{ kampaaja.name }} <br>
-    <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id) }}">
+    <form method="POST" action="{{ url_for('aika', kampaaja_id=kampaaja.id) }}">
         <table>
             <tr>
                 <td>
-                    {{ form.date.label }}
+                    {{ form.pvm.label }}
                 </td>
                 <td>
-                    {{ form.date }}
+                    {{ form.pvm }}
                 </td>
             </tr>
             <tr>
                 <td>
-                    {{ form.phoneNumber.label }}
+                    {{ form.aika_h.label }}
                 </td>
                 <td>
-                    {{ form.phoneNumber }}
+                    {{ form.aika_h }}
                 </td>
                 <td>
-                    {% for error in form.phoneNumber.errors %}
+                    {% for error in form.aika_h.errors %}
+                    <li> {{ error }} </li>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.aika_min.label }}
+                </td>
+                <td>
+                    {{ form.aika_min }}
+                </td>
+                <td>
+                    {% for error in form.aika_min.errors %}
                     <li> {{ error }} </li>
                     {% endfor %}
                 </td>
