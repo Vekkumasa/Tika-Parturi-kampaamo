@@ -16,6 +16,7 @@ class User(db.Model):
 
     varaukset = db.relationship("Varaus", backref='Kampaaja', lazy=True)
     vapaat_ajat = db.relationship("Aika", backref='Kampaaja', lazy=True)
+    
 
     def __init__(self, name, username, password):
         self.name = name
@@ -33,3 +34,15 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def find_available_times():
+        stmt = text("SELECT Kampaaja.id, Aika.pvm FROM Kampaaja"
+                    " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id")
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"id":row[0], "pvm":row[1]})
+
+        return response

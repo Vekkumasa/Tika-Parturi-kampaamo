@@ -9,26 +9,12 @@ class Aika(db.Model):
     aika_h = db.Column(db.Integer)
     aika_min = db.Column(db.Integer)
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
-
+    
     def __init__(self, pvm, aika_h, aika_min, kampaaja_id):
         self.pvm = pvm
         self.aika_h = aika_h
         self.aika_min = aika_min
         self.kampaaja_id = kampaaja_id
-
-    @staticmethod
-    def find_available_times():
-        stmt = text("SELECT Aika.id, Aika.pvm FROM Aika, Kampaaja"
-                    " WHERE Kampaaja.id = Aika.kampaaja_id")
-                    
-                    
-        res = db.engine.execute(stmt)
-
-        response = []
-        for row in res:
-            response.append({"id":row[0], "pvm":row[1]})
-
-        return response
 
 class Asiakas(Base):
 
