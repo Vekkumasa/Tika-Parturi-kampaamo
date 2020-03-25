@@ -3,7 +3,34 @@
 {% block body %}
     Nimi: {{ kampaaja.name }} <br>
     <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id) }}">
-        <input type="text" name="asiakas_id"/>
-        <input type="submit" value="Tee varaus"/>
+        <table>
+            <tr>
+                <td>
+                    {{ form.date.label }}
+                </td>
+                <td>
+                    {{ form.date }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.phoneNumber.label }}
+                </td>
+                <td>
+                    {{ form.phoneNumber }}
+                </td>
+                <td>
+                    {% for error in form.phoneNumber.errors %}
+                    <li> {{ error }} </li>
+                    {% endfor %}
+                </td>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Tee varaus"/>
+                    </td>
+                </tr>
+            </tr>
+        </table>
+        
     </form>
 {% endblock %}

@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.kampaamo.models import Asiakas, Varaus
-from application.kampaamo.forms import KampaajaForm, AsiakasForm, EditForm
+from application.kampaamo.forms import KampaajaForm, AsiakasForm, EditForm, VarausForm
 from application.auth.models import User
 
 @app.route("/kampaaja/", methods=["GET"])
@@ -17,17 +17,20 @@ def kampaaja_form():
 
 @app.route("/kampaaja/<kampaaja_id>", methods=["GET"])
 def kampaaja_show(kampaaja_id):
-    return render_template("kampaamo/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id))
+    return render_template("kampaamo/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id), form = VarausForm())
 
 
 @app.route("/kampaaja/<kampaaja_id>", methods=["POST"])
 def create_varaus(kampaaja_id):
 
-    a = Asiakas.query.get(request.form.get("asiakas_id"))
+    form = VarausForm(request.form)
+
+    a = Asiakas.query.get(form.phoneNumber.data)
     v = Varaus()
 
     v.kampaaja_id = kampaaja_id
     v.asiakas_id = a.phoneNumber
+    v.varaus_pvm = form.date.data
 
     db.session.add(v)
     db.session.commit()

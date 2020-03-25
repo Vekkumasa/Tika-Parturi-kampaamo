@@ -25,7 +25,7 @@ class EditForm(FlaskForm):
         csrf = False
 
 class VarausForm(FlaskForm):
-    dt = DateField('DatePicker', format='%D-%m-%y')
-
+    date = DateField('DatePicker', format='%Y-%m-%d')
+    phoneNumber = StringField("Puhelinnumero", [validators.Length(min=3)])
     class Meta:
         csrf = False

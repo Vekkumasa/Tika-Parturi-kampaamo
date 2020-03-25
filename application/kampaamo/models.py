@@ -19,8 +19,7 @@ class Varaus(db.Model):
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                     onupdate=db.func.current_timestamp())
 
-    varattu_aika = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                    onupdate=db.func.current_timestamp())
+    varaus_pvm = db.Column(db.Date)
 
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
