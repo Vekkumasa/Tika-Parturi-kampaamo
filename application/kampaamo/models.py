@@ -1,5 +1,6 @@
 from application import db
 from application.models import Base
+from sqlalchemy.sql import text
 
 class Aika(db.Model):
 
@@ -14,6 +15,20 @@ class Aika(db.Model):
         self.aika_h = aika_h
         self.aika_min = aika_min
         self.kampaaja_id = kampaaja_id
+
+    @staticmethod
+    def find_available_times():
+        stmt = text("SELECT Aika.id, Aika.pvm FROM Aika, Kampaaja"
+                    " WHERE Kampaaja.id = Aika.kampaaja_id")
+                    
+                    
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"id":row[0], "pvm":row[1]})
+
+        return response
 
 class Asiakas(Base):
 

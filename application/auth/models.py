@@ -1,4 +1,5 @@
 from application import db
+from sqlalchemy.sql import text
 
 class User(db.Model):
 
@@ -15,7 +16,7 @@ class User(db.Model):
 
     varaukset = db.relationship("Varaus", backref='Kampaaja', lazy=True)
     vapaat_ajat = db.relationship("Aika", backref='Kampaaja', lazy=True)
-    
+
     def __init__(self, name, username, password):
         self.name = name
         self.username = username

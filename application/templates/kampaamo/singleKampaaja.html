@@ -2,6 +2,18 @@
 
 {% block body %}
     Nimi: {{ kampaaja.name }} <br>
+    <table>
+        <tr>
+            <th>Valitse päivämäärä</th>
+        </tr>
+
+        <ul>
+            {% for pvm in pvm %}
+            <li>
+                {{ pvm.pvm  }}
+            </li>
+            {% endfor %}
+        </ul>
     <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id) }}">
         <table>
             <tr>
