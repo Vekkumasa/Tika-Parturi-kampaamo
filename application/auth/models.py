@@ -36,9 +36,10 @@ class User(db.Model):
         return True
 
     @staticmethod
-    def find_available_times():
+    def find_available_times(kampaaja_id):
         stmt = text("SELECT Kampaaja.id, Aika.pvm FROM Kampaaja"
-                    " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id")
+                    " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id"
+                    " WHERE Kampaaja.id = %s" % kampaaja_id)
         res = db.engine.execute(stmt)
 
         response = []
