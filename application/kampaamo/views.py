@@ -35,7 +35,7 @@ def varaus_muokkaus(varaus_id, kampaaja_id, aika_id):
 def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
 
     form = EditForm(request.form)
-
+    
     aika = Aika.query.get(aika_id)
     aika.pvm = form.pvm.data
     aika.h = form.aika_h.data
