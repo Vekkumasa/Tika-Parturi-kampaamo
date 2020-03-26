@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    Kampaaja: {{ kampaaja.name }} <br>
+    Päivämäärä: {{ aika.pvm }}
+    Klo: {{ aika.aika_h }}.{{ aika.aika_min }}
+
+    <table>
+        <th>Yhteystiedot</th>
+        <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id, aika_id=aika.id) }}">
+            <table>
+                <tr>
+                    <td>
+                        {{ form.firstName.label }}
+                    </td>
+                    <td>
+                        {{ form.firstName }}
+                    </td>
+                    <td>
+                        {% for error in form.firstName.errors %}
+                        <li> { error } </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.lastName.label }}
+                    </td>
+                    <td>
+                        {{ form.lastName }}
+                    </td>
+                    <td>
+                        {% for error in form.lastName.errors %}
+                        <li> { error } </li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.phoneNumber.label }}
+                    </td>
+                    <td>
+                        {{ form.phoneNumber }}
+                    </td>
+                    <td>
+                        {% for error in form.phoneNumber.errors %}
+                        <li> {{ error }} </li>
+                        {% endfor %}
+                    </td>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="Tee varaus"/>
+                        </td>
+                    </tr>
+                </tr>
+            </table>        
+        </form>
+    </table>
+
+
+{% endblock %}

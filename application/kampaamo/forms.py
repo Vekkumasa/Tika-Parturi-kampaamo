@@ -26,7 +26,8 @@ class EditForm(FlaskForm):
         csrf = False
 
 class VarausForm(FlaskForm):
-    date = DateField('DatePicker', format='%Y-%m-%d')
+    firstName = StringField("Etunimi", [validators.Length(min=3)])
+    lastName = StringField("Sukunini", [validators.Length(min=3)])
     phoneNumber = StringField("Puhelinnumero", [validators.Length(min=3)])
     class Meta:
         csrf = False

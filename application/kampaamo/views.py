@@ -19,18 +19,26 @@ def kampaaja_form():
 def kampaaja_show(kampaaja_id):
     return render_template("kampaamo/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id), pvm=User.find_available_times(kampaaja_id), form = VarausForm())
 
+@app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["GET"])
+def varaus_sivu(kampaaja_id, aika_id):
+    return render_template("kampaamo/varausformi.html", kampaaja=User.query.get(kampaaja_id), aika=Aika.query.get(aika_id), form = VarausForm())
 
-@app.route("/kampaaja/<kampaaja_id>", methods=["POST"])
-def create_varaus(kampaaja_id):
+@app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["POST"])
+def create_varaus(kampaaja_id, aika_id):
 
     form = VarausForm(request.form)
 
     a = Asiakas.query.get(form.phoneNumber.data)
+    if not a:
+        a = Asiakas(form.firstName.data, form.lastName.data, form.phoneNumber.data)
+        db.session.add(a)
     v = Varaus()
+
+    aika = Aika.query.get(aika_id)
 
     v.kampaaja_id = kampaaja_id
     v.asiakas_id = a.phoneNumber
-    v.varaus_pvm = form.date.data
+    v.varaus_pvm = aika.pvm
 
     db.session.add(v)
     db.session.commit()

@@ -2,46 +2,14 @@
 
 {% block body %}
     Nimi: {{ kampaaja.name }} <br>
-    <table>
-        <tr>
-            <th>Valitse päivämäärä</th>
-        </tr>
+        
+    <h6>Valitse päivämäärä</h6>
 
         <ul>
             {% for pvm in pvm %}
             <li>
-                {{ pvm.pvm  }}
+                <a href="{{ url_for('varaus_sivu', aika_id = pvm.id, kampaaja_id = kampaaja.id) }}">{{ pvm.pvm  }} &nbsp; {{ pvm.aika_h }}.{{ pvm.aika_min }}</a>
             </li>
             {% endfor %}
         </ul>
-    <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id) }}">
-        <table>
-            <tr>
-                <td>
-                    {{ form.date.label }}
-                </td>
-                <td>
-                    {{ form.date }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{ form.phoneNumber.label }}
-                </td>
-                <td>
-                    {{ form.phoneNumber }}
-                </td>
-                <td>
-                    {% for error in form.phoneNumber.errors %}
-                    <li> {{ error }} </li>
-                    {% endfor %}
-                </td>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Tee varaus"/>
-                    </td>
-                </tr>
-            </tr>
-        </table>        
-    </form>
 {% endblock %}
