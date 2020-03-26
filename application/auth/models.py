@@ -39,7 +39,8 @@ class User(db.Model):
     def find_available_times(kampaaja_id):
         stmt = text("SELECT Kampaaja.id, Aika.pvm, aika_h, aika_min FROM Kampaaja"
                     " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id"
-                    " WHERE Kampaaja.id = %s" % kampaaja_id)
+                    " WHERE (Kampaaja.id = %s AND Aika.vapaa = 1)"
+                    " GROUP BY Aika.pvm" % kampaaja_id)
         res = db.engine.execute(stmt)
 
         response = []
@@ -47,3 +48,18 @@ class User(db.Model):
             response.append({"id":row[0], "pvm":row[1], "aika_h":row[2], "aika_min":row[3]})
 
         return response
+
+    @staticmethod
+    def find_reservations(kampaaja_id):
+        stmt = text("SELECT Kampaaja.id, Varaus.id, Varaus.asiakas_id, Varaus.aika_id FROM Kampaaja"
+                    " LEFT JOIN Varaus ON Varaus.kampaaja_id = Kampaaja.id"
+                    " WHERE (Kampaaja.id = %s)" % kampaaja_id)
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"id":row[0], "varaus_id":row[1], "asiakas_id":row[2], "aika_id":row[3]})
+
+        return response
+
+        

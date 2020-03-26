@@ -12,16 +12,7 @@
         <tr>
             <td><a href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.firstName }}</a></td>
             <td>{{ asiakas.lastName }}</td>
-            {% if asiakas.phoneNumber %}
-                <td>{{ asiakas.phoneNumber }}</td>
-            {% else %}
-            <td>
-                <form method="POST" action="{{ url_for('asiakas_change_number', asiakas_id=asiakas.id) }}">
-                    <input type="text" name="number"/>
-                    <input type="submit" value="Lisää numero"/>
-                </form>
-            </td>
-            {% endif %}
+            <td>{{ asiakas.phoneNumber }}</td>
         </tr>
         {% endfor %}
     </table>

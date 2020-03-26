@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    Muokkaa VarausID: <a href="{{ url_for('varaus_muokkaus', varaus_id = varaus.id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.id }} </a>
+    <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id=varaus.id) }}">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Poista varaus"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

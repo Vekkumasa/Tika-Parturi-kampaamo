@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    Nimi: {{ kampaaja.name }} <br>
+        
+    <h6>Omat varaukset</h6>
+    <ol>
+        {% for varaus in varaus %}
+        <li>
+            <a href="{{ url_for('varaus_crud', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id) }}"> "varaus.id: {{ varaus.varaus_id }} &nbsp; varaus.asiakas_id{{ varaus.asiakas_id }}</a>
+        </li>
+        {% endfor %}
+    </ol>
+{% endblock %}

@@ -9,12 +9,15 @@ class Aika(db.Model):
     aika_h = db.Column(db.Integer)
     aika_min = db.Column(db.Integer)
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
-    
+    vapaa = db.Column(db.Boolean, nullable=False)
+
+    varaus = db.relationship("Varaus", uselist=False, backref="Aika")
     def __init__(self, pvm, aika_h, aika_min, kampaaja_id):
         self.pvm = pvm
         self.aika_h = aika_h
         self.aika_min = aika_min
         self.kampaaja_id = kampaaja_id
+        self.vapaa = True
 
 class Asiakas(Base):
 
@@ -34,7 +37,6 @@ class Varaus(db.Model):
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                     onupdate=db.func.current_timestamp())
 
-    varaus_pvm = db.Column(db.Date)
-
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
+    aika_id = db.Column(db.Integer, db.ForeignKey('aika.id'), nullable=False)
