@@ -14,3 +14,10 @@ Ketjulla on monta kampaajaa ja jokainen kampaaja voi toimia missä vain toimipis
 
 [Linkki käyttötapauksiin](https://github.com/Vekkumasa/Tika-Parturi-kampaamo/blob/master/documentation/k%C3%A4ytt%C3%B6tapaukset.md)
 
+Herokussa on tunnukset "Hello world" username: "hello" password "world"
+
+Varauksille täysi crud toiminnallisuus toteutettu MUTTA vaatii paljon viilausta. Täytyy operoida käyttäen pelkästään
+tarvittavia id:tä käyttäen.
+
+Varaukset muutetaan ja poistetaan kirjautumalla sisään valikosta omat varaukset -> valitsee varauksen ja joko poistaa
+tai muokkaa varausta
