@@ -2,13 +2,17 @@
 
 {% block body %}
     Nimi: {{ kampaaja.name }} <br>
-        
+    testi: {{ varaus }}
+    
+    
     <h6>Omat varaukset</h6>
-    <ol>
-        {% for varaus in varaus %}
-        <li>
-            <a href="{{ url_for('varaus_crud', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id) }}"> "varaus.id: {{ varaus.varaus_id }} &nbsp; varaus.asiakas_id{{ varaus.asiakas_id }}</a>
-        </li>
-        {% endfor %}
-    </ol>
+    {% if varaus is defined %}
+        <ol>
+            {% for varaus in varaus %}
+            <li>
+                <a href="{{ url_for('varaus_crud', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id) }}"> {{ varaus.aika_pvm }} &nbsp; Klo: {{ varaus.aika_h }}.{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
+            </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
 {% endblock %}

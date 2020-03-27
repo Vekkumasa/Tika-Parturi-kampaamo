@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    Muokkaa VarausID: <a href="{{ url_for('varaus_muokkaus', varaus_id = varaus.id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.id }} </a>
-    <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id=varaus.id) }}">
+
+    {% for varaus in varaus %}
+    
+        Muokkaa varausta: <a href="{{ url_for('varaus_muokkaus', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
+    
+    <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id= varaus.varaus_id) }}">
         <table>
             <tr>
                 <td colspan="2">
@@ -11,4 +15,5 @@
             </tr>
         </table>
     </form>
+    {% endfor %}
 {% endblock %}

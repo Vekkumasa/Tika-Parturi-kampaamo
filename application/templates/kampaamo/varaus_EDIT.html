@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-VARAUS_EDIT.HTML <br>
-Muokkaa VarausID: <a href="{{ url_for('varaus_muokkaus', varaus_id = varaus.id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.id }} </a>
+
+{% for varaus in varaus %}
+    Varaus: <b>{{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; {{ varaus.asiakas_name }}</b> 
+{% endfor %}
     <form method="POST" action="{{ url_for('muokkaa_varausta', kampaaja_id=kampaaja.id, varaus_id=varaus.id, aika_id = varaus.aika_id) }}">
         <table>
             <tr>

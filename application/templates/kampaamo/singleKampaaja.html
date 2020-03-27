@@ -8,7 +8,7 @@
         <ul>
             {% for pvm in pvm %}
             <li>
-                <a href="{{ url_for('varaus_sivu', aika_id = pvm.id, kampaaja_id = kampaaja.id) }}">{{ pvm.pvm  }} &nbsp; {{ pvm.aika_h }}.{{ pvm.aika_min }}</a>
+            pvm.id: {{ pvm.id }} pvm.aika_id: {{pvm.aika_id}}    <a href="{{ url_for('varaus_sivu', aika_id = pvm.aika_id, kampaaja_id = kampaaja.id) }}">{{ pvm.pvm  }} &nbsp; {{ pvm.aika_h }}.{{ pvm.aika_min }}</a>
             </li>
             {% endfor %}
         </ul>

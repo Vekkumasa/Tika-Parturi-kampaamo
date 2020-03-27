@@ -16,10 +16,12 @@ def kampaaja_form():
     return render_template("kampaamo/newKampaaja.html", form = KampaajaForm())
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>", methods=["GET"])
+@login_required
 def varaus_crud(kampaaja_id, varaus_id):
-    return render_template("kampaamo/varaus_CRUD.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.query.get(varaus_id), form = DeleteForm)
+    return render_template("kampaamo/varaus_CRUD.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.find_reservations(varaus_id), form = DeleteForm)
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/", methods=["POST"])
+@login_required
 def poista_varaus(varaus_id, kampaaja_id):
     v = Varaus.query.get(varaus_id)
     db.session.delete(v)
@@ -28,13 +30,18 @@ def poista_varaus(varaus_id, kampaaja_id):
     return redirect(url_for("kampaaja_index"))
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/muokkaa/<aika_id>", methods=["GET"])
+@login_required
 def varaus_muokkaus(varaus_id, kampaaja_id, aika_id):
-    return render_template("kampaamo/varaus_EDIT.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.query.get(varaus_id), aika = Aika.query.get(aika_id), form = EditForm())
+    return render_template("kampaamo/varaus_EDIT.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.find_reservations(varaus_id), aika = Aika.query.get(aika_id), form = EditForm())
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/muokkaa/<aika_id>", methods=["POST"])
+@login_required
 def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
 
     form = EditForm(request.form)
+
+    if not form.validate():
+        return render_template("kampaamo/varaus_EDIT.html", kampaaja = kampaaja_id , aika = aika_id, varaus=varaus_id, form = form)
     
     aika = Aika.query.get(aika_id)
     aika.pvm = form.pvm.data
@@ -44,15 +51,18 @@ def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
     db.session.commit()
 
     return redirect(url_for("kampaaja_index"))
+
 @app.route("/kampaaja/<kampaaja_id>", methods=["GET"])
 def kampaaja_show(kampaaja_id):
     return render_template("kampaamo/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id), pvm=User.find_available_times(kampaaja_id), form = VarausForm())
 
 @app.route("/kampaaja/<kampaaja_id>/varaukset", methods=["GET"])
+@login_required
 def kampaajan_varaukset(kampaaja_id):
     return render_template("kampaamo/omat_varaukset.html", kampaaja=User.query.get(kampaaja_id), varaus=User.find_reservations(kampaaja_id))
 
 @app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["GET"])
+@login_required
 def varaus_sivu(kampaaja_id, aika_id):
     return render_template("kampaamo/varausformi.html", kampaaja=User.query.get(kampaaja_id), aika=Aika.query.get(aika_id), form = VarausForm())
 
@@ -80,13 +90,17 @@ def create_varaus(kampaaja_id, aika_id):
     return redirect(url_for("kampaaja_index"))
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["GET"])
+@login_required
 def aika(kampaaja_id):
     return render_template("kampaamo/ajanvaraus.html", kampaaja=User.query.get(kampaaja_id), form = AikaForm())
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["POST"])
+@login_required
 def create_aika(kampaaja_id):
 
     form = AikaForm(request.form)
+    if not form.validate():
+        return render_template("kampaamo/ajanvaraus.html", kampaaja = kampaaja_id ,form = form)
 
     a = Aika(form.pvm.data, form.aika_h.data, form.aika_min.data, kampaaja_id)
 

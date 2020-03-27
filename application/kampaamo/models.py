@@ -11,7 +11,8 @@ class Aika(db.Model):
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     vapaa = db.Column(db.Boolean, nullable=False)
 
-    varaus = db.relationship("Varaus", uselist=False, backref="Aika")
+    varaus = db.relationship("Varaus", backref="Aika", lazy=True)
+
     def __init__(self, pvm, aika_h, aika_min, kampaaja_id):
         self.pvm = pvm
         self.aika_h = aika_h
@@ -40,3 +41,17 @@ class Varaus(db.Model):
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('aika.id'), nullable=False)
+
+    @staticmethod
+    def find_reservations(varaus_id):
+        stmt = text("SELECT Varaus.id, Aika.id, Aika.pvm, Aika.aika_h, Aika.aika_min, Asiakas.firstName FROM Varaus"
+                    " LEFT JOIN Aika On Aika.id = Varaus.aika_id"
+                    " LEFT JOIN Asiakas ON Asiakas.phoneNumber = Varaus.asiakas_id "
+                    " WHERE Varaus.id = %s" % varaus_id)
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"varaus_id":row[0], "aika_id":row[1], "aika_pvm":row[2], "aika_h":row[3], "aika_min":row[4], "asiakas_name":row[5]})
+
+        return response
