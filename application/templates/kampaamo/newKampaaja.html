@@ -1,50 +1,37 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('kampaaja_create') }}">
-    <table>
-        <tr>
-            <td>
-                {{ form.name.label }}
-            </td>
-            <td>
-                {{ form.name }}
-            </td>
-            <td>
-                {% for error in form.name.errors %}
-                <li> {{ error }} </li>
-                {% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.username.label }}
-            </td>
-            <td>
-                {{ form.username }}
-            </td>
-            <td>
-                {% for error in form.username.errors %}
-                <li> {{ error }} </li>
-                {% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.password.label }}
-            </td>
-            <td>
-                {{ form.password }}
-            </td>
-            <td>
-                {% for error in form.password.errors %}
-                <li> {{ error }} </li>
-                {% endfor %}
-            </td>
-        </tr>
-        <td colspan="2">
-            <input type="submit" value="Lisää kampaaja"/>
-        </td>
-    </table>
-</form>
+    <form method="POST" action="{{ url_for('kampaaja_create') }}">
+    <div class="form-group">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name?">
+            <br>
+            <input type="text" class="form-control" id="username" name="username" placeholder="username?">
+            <br>
+            <input type="password" class="form-control" id="password" name="password" placeholder="password?">
+            <br>
+            <center>
+            <button type="submit" class="btn btn-success">Lisää kampaaja</button>
+            </center>
+          </div> 
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+        {% for message in messages %}
+            {% if "Kampaajan lisääminen epäonnistui" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+
+            {% if "Kampaajan lisääminen epäonnistui" in message[1]: %}
+                <div class="alert alert-danger">
+                <strong>Error: </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
 {% endblock %}

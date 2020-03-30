@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<div class="list-group">
     <table>
         <tr>
             <th>First name &nbsp;</th>
@@ -10,10 +11,11 @@
 
         {% for asiakas in asiakkaat %}
         <tr>
-            <td><a href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.firstName }}</a></td>
-            <td>{{ asiakas.lastName }}</td>
-            <td>{{ asiakas.phoneNumber }}</td>
+            <td><a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.firstName }}</a></td>
+            <td><a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.lastName }}</a></td>
+            <td><a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.phoneNumber }}</a></td>
         </tr>
         {% endfor %}
     </table>
+</div>
 {% endblock %}

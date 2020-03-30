@@ -1,15 +1,19 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    Nimi: {{ kampaaja.name }} <br>
-        
-    <h6>Valitse päivämäärä</h6>
+    
+    Olet tekemässä varausta kampaajalle: <br>
+    <b>{{ kampaaja.name }}</b> <br>
+    <br>
+    <h6>Valitse sopiva aika</h6>
 
+    <div class="list-group">
         <ul>
             {% for pvm in pvm %}
             <li>
-            pvm.id: {{ pvm.id }} pvm.aika_id: {{pvm.aika_id}}    <a href="{{ url_for('varaus_sivu', aika_id = pvm.aika_id, kampaaja_id = kampaaja.id) }}">{{ pvm.pvm  }} &nbsp; {{ pvm.aika_h }}.{{ pvm.aika_min }}</a>
+                <a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('varaus_sivu', aika_id = pvm.aika_id, kampaaja_id = kampaaja.id) }}">{{ pvm.pvm  }} &nbsp; {{ pvm.aika_h }}.{{ pvm.aika_min }}</a>
             </li>
             {% endfor %}
         </ul>
+    </div>
 {% endblock %}

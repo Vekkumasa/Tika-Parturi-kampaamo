@@ -1,18 +1,21 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <table>
-        <tr>
-            <th>Name</th>
-        </tr>
+    <div class="list-group">
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
 
-        {% for kampaaja in kampaajat %}
-        <tr>
-            <td><a href="{{ url_for('kampaaja_show', kampaaja_id=kampaaja.id) }}"> {{ kampaaja.name }}</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-
+            {% for kampaaja in kampaajat %}
+            
+                <tr>
+                    <td><a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('kampaaja_show', kampaaja_id=kampaaja.id) }}"> {{ kampaaja.name }}</a></td>
+                </tr>
+            
+            {% endfor %}
+        </table>
+    </div>
     {% if current_user.is_authenticated %}
     <p></p>
     {% endif %}

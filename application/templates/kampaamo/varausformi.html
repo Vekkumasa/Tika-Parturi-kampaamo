@@ -3,59 +3,40 @@
 {% block body %}
     Kampaaja: {{ kampaaja.name }} <br>
     Päivämäärä: {{ aika.pvm }}
-    Klo: {{ aika.aika_h }}.{{ aika.aika_min }}
+    Klo: {{ aika.aika_h }}.{{ aika.aika_min }} <br><br>
 
-    <table>
-        <th>Yhteystiedot</th>
+        <b>Yhteystiedot:</b>
         <form method="POST" action="{{ url_for('create_varaus', kampaaja_id=kampaaja.id, aika_id=aika.id) }}">
-            <table>
-                <tr>
-                    <td>
-                        {{ form.firstName.label }}
-                    </td>
-                    <td>
-                        {{ form.firstName }}
-                    </td>
-                    <td>
-                        {% for error in form.firstName.errors %}
-                        <li> { error } </li>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {{ form.lastName.label }}
-                    </td>
-                    <td>
-                        {{ form.lastName }}
-                    </td>
-                    <td>
-                        {% for error in form.lastName.errors %}
-                        <li> { error } </li>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {{ form.phoneNumber.label }}
-                    </td>
-                    <td>
-                        {{ form.phoneNumber }}
-                    </td>
-                    <td>
-                        {% for error in form.phoneNumber.errors %}
-                        <li> {{ error }} </li>
-                        {% endfor %}
-                    </td>
-                    <tr>
-                        <td colspan="2">
-                            <input type="submit" value="Tee varaus"/>
-                        </td>
-                    </tr>
-                </tr>
-            </table>        
+            <div class="form-group">
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Firstname?">
+            <br>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Lastname?">
+            <br>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Your phonenumber">
+            <br>
+            <center>
+            <button type="submit" class="btn btn-success">Submit</button>
+            </center>
+          </div>    
         </form>
-    </table>
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+        {% for message in messages %}
+            {% if "Varauksen teko epäonnistui:" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+
+            {% if "Varauksen teko epäonnistui:" in message[1]: %}
+                <div class="alert alert-danger">
+                <strong>Error: </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
 
 {% endblock %}

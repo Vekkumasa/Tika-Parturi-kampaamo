@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, request
+from flask import redirect, url_for, render_template, request, flash
 from flask_login import login_required
 
 from application import app, db
@@ -62,7 +62,7 @@ def kampaajan_varaukset(kampaaja_id):
     return render_template("kampaamo/omat_varaukset.html", kampaaja=User.query.get(kampaaja_id), varaus=User.find_reservations(kampaaja_id))
 
 @app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["GET"])
-@login_required
+
 def varaus_sivu(kampaaja_id, aika_id):
     return render_template("kampaamo/varausformi.html", kampaaja=User.query.get(kampaaja_id), aika=Aika.query.get(aika_id), form = VarausForm())
 
@@ -74,7 +74,13 @@ def create_varaus(kampaaja_id, aika_id):
     a = Asiakas.query.get(form.phoneNumber.data)
     if not a:
         a = Asiakas(form.firstName.data, form.lastName.data, form.phoneNumber.data)
-        db.session.add(a)
+
+        if form.validate():
+            db.session.add(a)
+            flash('Varaus tehty nimellä: {} {}'.format(form.firstName.data, form.lastName.data))
+        else:
+            flash('Varauksen teko epäonnistui:')
+            return render_template("kampaamo/varausformi.html", kampaaja = kampaaja_id, aika = aika_id, form = form)
     v = Varaus()
 
     aika = Aika.query.get(aika_id)
@@ -87,7 +93,7 @@ def create_varaus(kampaaja_id, aika_id):
     db.session.add(v)
     db.session.commit()
 
-    return redirect(url_for("kampaaja_index"))
+    return render_template("kampaamo/varausformi.html", kampaaja = kampaaja_id, aika = aika_id, form = form)
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["GET"])
 @login_required
@@ -99,7 +105,9 @@ def aika(kampaaja_id):
 def create_aika(kampaaja_id):
 
     form = AikaForm(request.form)
+
     if not form.validate():
+        flash('Ajan lisääminen epäonnistui')
         return render_template("kampaamo/ajanvaraus.html", kampaaja = kampaaja_id ,form = form)
 
     a = Aika(form.pvm.data, form.aika_h.data, form.aika_min.data, kampaaja_id)
@@ -107,7 +115,8 @@ def create_aika(kampaaja_id):
     db.session.add(a)
     db.session.commit()
 
-    return redirect(url_for("aika", kampaaja_id=kampaaja_id))
+    flash('Aika lisätty: {} {} {}'.format(form.pvm.data, form.aika_h.data, form.aika_min.data))
+    return redirect(url_for("create_aika", kampaaja_id=kampaaja_id))
 
 @app.route("/kampaaja/", methods=["POST"])
 @login_required
@@ -116,6 +125,7 @@ def kampaaja_create():
     form = KampaajaForm(request.form)
 
     if not form.validate():
+        flash('Kampaajan lisääminen epäonnistui')
         return render_template("kampaamo/newKampaaja.html", form = form)
 
     k = User(form.name.data, form.username.data, form.password.data)
@@ -123,7 +133,8 @@ def kampaaja_create():
     db.session().add(k)
     db.session().commit()
 
-    return redirect(url_for("kampaaja_index"))
+    flash('Kampaaja lisätty: {} {}'.format(form.name.data, form.username.data))
+    return redirect(url_for("kampaaja_form"))
 
 
 @app.route("/asiakas/", methods=["GET"])
