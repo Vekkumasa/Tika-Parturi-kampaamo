@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
+    <div class="list-group">
     {% for varaus in varaus %}
     
-        Muokkaa varausta: <a href="{{ url_for('varaus_muokkaus', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
+        Klikkaa varausta muokataksesi varausta: <a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('varaus_muokkaus', varaus_id = varaus.id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
     
-    <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id= varaus.varaus_id) }}">
+    <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id= varaus.id) }}">
         <table>
             <tr>
                 <td colspan="2">
@@ -16,4 +16,5 @@
         </table>
     </form>
     {% endfor %}
+</div>
 {% endblock %}

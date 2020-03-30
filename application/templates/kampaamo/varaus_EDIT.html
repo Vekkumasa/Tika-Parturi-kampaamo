@@ -2,49 +2,39 @@
 {% block body %}
 
 {% for varaus in varaus %}
-    Varaus: <b>{{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; {{ varaus.asiakas_name }}</b> 
-{% endfor %}
+    Varaus: {{ varaus.id }}<b>{{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; {{ varaus.asiakas_name }}</b> 
+
     <form method="POST" action="{{ url_for('muokkaa_varausta', kampaaja_id=kampaaja.id, varaus_id=varaus.id, aika_id = varaus.aika_id) }}">
-        <table>
-            <tr>
-                <td>
-                    {{ form.pvm.label }}
-                </td>
-                <td>
-                    {{ form.pvm }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{ form.aika_h.label }}
-                </td>
-                <td>
-                    {{ form.aika_h }}
-                </td>
-                <td>
-                    {% for error in form.aika_h.errors %}
-                    <li> {{ error }} </li>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{ form.aika_min.label }}
-                </td>
-                <td>
-                    {{ form.aika_min }}
-                </td>
-                <td>
-                    {% for error in form.aika_min.errors %}
-                    <li> {{ error }} </li>
-                    {% endfor %}
-                </td>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Tee varaus"/>
-                    </td>
-                </tr>
-            </tr>
-        </table>        
+        <div class="form-group">
+            <input type="date" class="form-control" id="pvm" name="pvm">
+            <br>
+            <input type="number" class="form-control" id="aika_h" name="aika_h">
+            <br>
+            <input type="number" class="form-control" id="aika_min" name="aika_min">
+            <br>
+            <center>
+            <button type="submit" class="btn btn-success">Lisää!</button>
+            </center>
+          </div>       
     </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+        {% for message in messages %}
+            {% if "Ajan muokkaus epäonnistui" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+
+            {% if "Ajan muokkaus epäonnistui" in message[1]: %}
+                <div class="alert alert-danger">
+                <strong>Error: </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
 {% endblock %}

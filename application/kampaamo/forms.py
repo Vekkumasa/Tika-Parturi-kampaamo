@@ -41,7 +41,7 @@ class DeleteForm(FlaskForm):
         csrf = False
 
 class EditForm(FlaskForm):
-    pvm = DateField('Date', validators=[DataRequired(message="You need to enter the start date")] , format='%Y-%m-%d')
+    pvm = DateField('Date', format='%Y-%m-%d')
     aika_h = IntegerField("Hour", validators=[NumberRange(min=0, max=24, message='Arvo 0-24 välillä')])
     aika_min = IntegerField("Minutes", validators=[NumberRange(min=0, max=60, message='Arvo 0-60 välillä')])
 

@@ -41,16 +41,18 @@ def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
     form = EditForm(request.form)
 
     if not form.validate():
-        return render_template("kampaamo/varaus_EDIT.html", kampaaja = kampaaja_id , aika = aika_id, varaus=varaus_id, form = form)
+        flash('Ajan muokkaus epäonnistui')
+        return redirect(url_for("varaus_muokkaus", kampaaja_id=kampaaja_id, aika_id = aika_id, varaus_id = varaus_id))
     
     aika = Aika.query.get(aika_id)
     aika.pvm = form.pvm.data
-    aika.h = form.aika_h.data
-    aika.min = form.aika_min.data
+    aika.aika_h = form.aika_h.data
+    aika.aika_min = form.aika_min.data
     
     db.session.commit()
 
-    return redirect(url_for("kampaaja_index"))
+    flash('Aika muutettu: {} {} {}'.format(form.pvm.data, form.aika_h.data, form.aika_min.data))
+    return redirect(url_for("varaus_muokkaus", kampaaja_id=kampaaja_id, aika_id = aika_id, varaus_id = varaus_id))
 
 @app.route("/kampaaja/<kampaaja_id>", methods=["GET"])
 def kampaaja_show(kampaaja_id):

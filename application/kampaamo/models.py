@@ -52,6 +52,6 @@ class Varaus(db.Model):
 
         response = []
         for row in res:
-            response.append({"varaus_id":row[0], "aika_id":row[1], "aika_pvm":row[2], "aika_h":row[3], "aika_min":row[4], "asiakas_name":row[5]})
+            response.append({"id":row[0], "aika_id":row[1], "aika_pvm":row[2], "aika_h":row[3], "aika_min":row[4], "asiakas_name":row[5]})
 
         return response
