@@ -1,18 +1,23 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    Nimi: {{ kampaaja.name }} <br>
-    testi: {{ varaus }}
-    
+    Nimi: {{ kampaaja.name }} <br>    
     
     <h6>Omat varaukset</h6>
-    {% if varaus is defined %}
+    {% for varaus1 in varaus %}
+    {% if varaus1.varaus_id != None %}
+
+    <div class="list-group">
         <ol>
             {% for varaus in varaus %}
             <li>
-                <a href="{{ url_for('varaus_crud', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id) }}"> {{ varaus.aika_pvm }} &nbsp; Klo: {{ varaus.aika_h }}.{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
+                <a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('varaus_crud', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id) }}"> {{ varaus.aika_pvm }} &nbsp; Klo: {{ varaus.aika_h }}.{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
             </li>
             {% endfor %}
         </ol>
+    </div>
+    {% else %}
+    <p>Ei varauksia!</p>
     {% endif %}
+    {% endfor %}
 {% endblock %}
