@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 class User(db.Model):
 
-    __tablename__ = "Kampaaja"
+    __tablename__ = "kampaaja"
 
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
