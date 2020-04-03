@@ -38,13 +38,9 @@ class Varaus(db.Model):
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                     onupdate=db.func.current_timestamp())
 
-    testi = db.Column(db.Integer)
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('aika.id'), nullable=False)
-
-    def __init__(self):
-        self.testi = 1
 
     @staticmethod
     def find_reservations(varaus_id):
@@ -59,3 +55,9 @@ class Varaus(db.Model):
             response.append({"id":row[0], "aika_id":row[1], "aika_pvm":row[2], "aika_h":row[3], "aika_min":row[4], "asiakas_name":row[5]})
 
         return response
+
+class Testi(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, name):
+        self.name = name
