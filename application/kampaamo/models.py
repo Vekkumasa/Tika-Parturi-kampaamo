@@ -55,9 +55,3 @@ class Varaus(db.Model):
             response.append({"id":row[0], "aika_id":row[1], "aika_pvm":row[2], "aika_h":row[3], "aika_min":row[4], "asiakas_name":row[5]})
 
         return response
-
-class Testi(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-
-    def __init__(self, name):
-        self.name = name
