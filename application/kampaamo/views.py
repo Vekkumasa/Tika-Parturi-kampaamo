@@ -2,7 +2,7 @@ from flask import redirect, url_for, render_template, request, flash
 from flask_login import login_required
 
 from application import app, db
-from application.kampaamo.models import Varaus, Aika
+from application.kampaamo.models import Asiakas, Varaus, Aika
 from application.kampaamo.forms import KampaajaForm, AsiakasForm, VarausForm, AikaForm, EditForm, DeleteForm
 from application.auth.models import User
 
