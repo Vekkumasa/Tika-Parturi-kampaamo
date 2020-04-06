@@ -20,15 +20,6 @@ class Aika(db.Model):
         self.kampaaja_id = kampaaja_id
         self.vapaa = True
 
-class Asiakas(Base):
-
-    phoneNumber = db.Column(db.String(144), primary_key=True, nullable=False)
-    varaukset = db.relationship("Varaus", backref='Asiakas', lazy=True)
-
-    def __init__(self, firstName, lastName, phoneNumber):
-        self.firstName = firstName
-        self.lastName = lastName
-        self.phoneNumber = phoneNumber
 
 
 class Varaus(db.Model):
@@ -39,7 +30,7 @@ class Varaus(db.Model):
                     onupdate=db.func.current_timestamp())
 
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
-    asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
+#    asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('aika.id'), nullable=False)
 
     @staticmethod
