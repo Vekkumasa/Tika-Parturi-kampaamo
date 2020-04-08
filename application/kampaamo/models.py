@@ -4,6 +4,8 @@ from sqlalchemy.sql import text
 
 class Aika(db.Model):
 
+    __tablename__ = "Aika"
+
     id = db.Column(db.Integer, primary_key=True)
     pvm = db.Column(db.Date)
     aika_h = db.Column(db.Integer)
@@ -22,6 +24,8 @@ class Aika(db.Model):
 
 class Asiakas(Base):
 
+    __tablename__ = "Asiakas"
+
     phoneNumber = db.Column(db.String(144), primary_key=True, nullable=False)
     varaukset = db.relationship("Varaus", backref='Asiakas', lazy=True)
 
@@ -31,6 +35,8 @@ class Asiakas(Base):
         self.phoneNumber = phoneNumber
 
 class Varaus(db.Model):
+
+    __tablename__ = "Varaus"
 
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
