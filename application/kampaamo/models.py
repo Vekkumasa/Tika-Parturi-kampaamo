@@ -38,8 +38,8 @@ class Varaus(db.Model):
                     onupdate=db.func.current_timestamp())
 
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
-    asiakas_id = db.Column(db.Integer, db.ForeignKey('asiakas.phoneNumber'), nullable=False)
-    aika_id = db.Column(db.Integer, db.ForeignKey('aika.id'), nullable=False)
+    asiakas_id = db.Column(db.Integer, db.ForeignKey('Asiakas.phoneNumber'), nullable=False)
+    aika_id = db.Column(db.Integer, db.ForeignKey('Aika.id'), nullable=False)
 
     @staticmethod
     def find_reservations(varaus_id):
