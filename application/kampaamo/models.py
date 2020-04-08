@@ -8,9 +8,9 @@ class Aika(db.Model):
     pvm = db.Column(db.Date)
     aika_h = db.Column(db.Integer)
     aika_min = db.Column(db.Integer)
-    kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     vapaa = db.Column(db.Boolean, nullable=False)
 
+    kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     varaus = db.relationship("Varaus", backref="Aika", lazy=True)
 
     def __init__(self, pvm, aika_h, aika_min, kampaaja_id):
@@ -29,7 +29,6 @@ class Asiakas(Base):
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
-
 
 class Varaus(db.Model):
 
@@ -55,3 +54,23 @@ class Varaus(db.Model):
             response.append({"id":row[0], "aika_id":row[1], "aika_pvm":row[2], "aika_h":row[3], "aika_min":row[4], "asiakas_name":row[5]})
 
         return response
+
+class Testi(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(144))
+
+class Testi1(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(144))
+
+class Testi2(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(144))
+
+class Testi3(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(144))
+
+class Testi4(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(144))

@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.kampaamo.models import Asiakas, Varaus, Aika
-from application.kampaamo.forms import KampaajaForm, AsiakasForm, VarausForm, AikaForm, EditForm, DeleteForm
+from application.kampaamo.forms import KampaajaForm, AsiakasForm, VarausForm, AikaForm, EditForm, DeleteForm, DeleteTimeForm
 from application.auth.models import User
 
 @app.route("/kampaaja/", methods=["GET"])
@@ -24,6 +24,8 @@ def varaus_crud(kampaaja_id, varaus_id):
 @login_required
 def poista_varaus(varaus_id, kampaaja_id):
     v = Varaus.query.get(varaus_id)
+    a = Aika.query.get(v.aika_id)
+    a.vapaa = True
     db.session.delete(v)
     db.session.commit()
 
@@ -66,7 +68,7 @@ def kampaajan_varaukset(kampaaja_id):
 @app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["GET"])
 
 def varaus_sivu(kampaaja_id, aika_id):
-    return render_template("kampaamo/varausformi.html", kampaaja=User.query.get(kampaaja_id), aika=Aika.query.get(aika_id), form = VarausForm())
+    return render_template("kampaamo/varausformi.html", kampaaja=User.query.get(kampaaja_id), aika=Aika.query.get(aika_id), formi = DeleteTimeForm(), form = VarausForm())
 
 @app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["POST"])
 def create_varaus(kampaaja_id, aika_id):
@@ -96,6 +98,11 @@ def create_varaus(kampaaja_id, aika_id):
     db.session.commit()
 
     return render_template("kampaamo/varausformi.html", kampaaja = kampaaja_id, aika = aika_id, form = form)
+
+@app.route("/kampaaja/<kampaaja_id>/varaus/<aika_id>", methods=["POST"])
+def poista_vapaa_aika(kampaaja_id, aika_id):
+
+    formi = DeleteTimeForm(request.form)
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["GET"])
 @login_required
