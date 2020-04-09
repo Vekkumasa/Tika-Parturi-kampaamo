@@ -17,10 +17,11 @@ db = SQLAlchemy(app)
 
 # oman sovelluksen toiminallisuudet
 from application import views
-from application.kampaamo import models
-from application.kampaamo import views
-from application.auth import models
-from application.auth import views
+from application.auth import models, views
+from application.varaus import models, views
+from application.kampaaja import views
+from application.aika import models, views
+from application.asiakas import models, views
 
 # Kirjautuminen
 from application.auth.models import User
