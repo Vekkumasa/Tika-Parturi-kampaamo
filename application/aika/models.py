@@ -4,15 +4,13 @@ from sqlalchemy.sql import text
 
 class Aika(db.Model):
 
-    __tablename__ = "Aika"
-
     id = db.Column(db.Integer, primary_key=True)
     pvm = db.Column(db.Date)
     aika_h = db.Column(db.Integer)
     aika_min = db.Column(db.Integer)
     vapaa = db.Column(db.Boolean, nullable=False)
 
-    kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
+    kampaaja_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     varaus = db.relationship("Varaus", backref="Aika", lazy=True)
 
     def __init__(self, pvm, aika_h, aika_min, kampaaja_id):

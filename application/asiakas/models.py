@@ -4,8 +4,6 @@ from sqlalchemy.sql import text
 
 class Asiakas(Base):
 
-    __tablename__ = "Asiakas"
-
     phoneNumber = db.Column(db.String(144), primary_key=True, nullable=False)
     varaukset = db.relationship("Varaus", backref='Asiakas', lazy=True)
 

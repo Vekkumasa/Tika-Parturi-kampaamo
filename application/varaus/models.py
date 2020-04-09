@@ -4,14 +4,12 @@ from sqlalchemy.sql import text
 
 class Varaus(db.Model):
 
-    __tablename__ = "Varaus"
-
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                     onupdate=db.func.current_timestamp())
 
-    kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
+    kampaaja_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     asiakas_id = db.Column(db.Integer, db.ForeignKey('Asiakas.phoneNumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('Aika.id'), nullable=False)
 
