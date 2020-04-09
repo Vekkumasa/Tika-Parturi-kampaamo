@@ -15,6 +15,11 @@ class Varaus(db.Model):
     asiakas_id = db.Column(db.Integer, db.ForeignKey('Asiakas.phoneNumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('Aika.id'), nullable=False)
 
+    def __init__(self):
+        self.kampaaja_id
+        self.asiakas_id
+        self.aika_id
+
     @staticmethod
     def find_reservations(varaus_id):
         stmt = text("SELECT Varaus.id, Aika.id, Aika.pvm, Aika.aika_h, Aika.aika_min, Asiakas.firstName FROM Varaus"
