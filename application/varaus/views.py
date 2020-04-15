@@ -46,15 +46,13 @@ def create_varaus(kampaaja_id, aika_id):
             flash('Varaus tehty nimellä: {} {}'.format(form.firstName.data, form.lastName.data))
         else:
             flash('Varauksen teko epäonnistui:')
-            return render_template("kampaamo/varausformi.html", kampaaja = kampaaja_id, aika = aika_id, form = form)
-    v = Varaus()
+            return render_template("varaus/varausformi.html", kampaaja = kampaaja_id, aika = aika_id, form = form)
+    
 
     aika = Aika.query.get(aika_id)
     aika.vapaa = False
 
-    v.kampaaja_id = kampaaja_id
-    v.asiakas_id = a.phoneNumber
-    v.aika_id = aika.id
+    v = Varaus(kampaaja_id, a.phoneNumber, aika.id)
 
     db.session.add(v)
     db.session.commit()

@@ -4,19 +4,21 @@ from sqlalchemy.sql import text
 
 class Varaus(db.Model):
 
+    __tablename__ = "Varaus"
+
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                     onupdate=db.func.current_timestamp())
 
-    kampaaja_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     asiakas_id = db.Column(db.Integer, db.ForeignKey('Asiakas.phoneNumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('Aika.id'), nullable=False)
 
-    def __init__(self):
-        self.kampaaja_id
-        self.asiakas_id
-        self.aika_id
+    def __init__(self, kampaaja_id, asiakas_id, aika_id):
+        self.kampaaja_id = kampaaja_id
+        self.asiakas_id = asiakas_id
+        self.aika_id = aika_id
 
     @staticmethod
     def find_reservations(varaus_id):

@@ -1,20 +1,24 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
+    {{ varaus }}
     <div class="list-group">
     {% for varaus in varaus %}
     
-        Klikkaa varausta muokataksesi varausta: <a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('varaus_muokkaus', varaus_id = varaus.id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
-    
-    <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id= varaus.id) }}">
-        <table>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Poista varaus"/>
-                </td>
-            </tr>
-        </table>
-    </form>
+        Klikkaa muokataksesi varausta: <a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('varaus_muokkaus', varaus_id = varaus.id, kampaaja_id = kampaaja.id, aika_id = varaus.aika_id)}}"> {{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
+        
+        <form method="POST" action="{{ url_for('poista_varaus', kampaaja_id=kampaaja.id, varaus_id=varaus.id) }}">
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Poista varaus"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        
     {% endfor %}
+
 </div>
 {% endblock %}

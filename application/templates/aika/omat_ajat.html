@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="list-group">
+    <ul>
+        {% for aika in aika %}
+            <li class="list-group-item list-group-item-action list-group-item-info"> {{aika.pvm}} &nbsp; {{aika.aika_h}}.{{aika.aika_min}} </li>
+            <form method="POST" action="{{ url_for('poista_vapaa_aika', kampaaja_id=kampaaja.id, aika_id=aika.id) }}">
+                {{ form.aika }}
+            </form>
+            <br/>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

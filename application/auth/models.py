@@ -3,6 +3,8 @@ from sqlalchemy.sql import text
 
 class User(db.Model):
 
+    __tablename__ = "Kampaaja"
+
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
@@ -12,8 +14,8 @@ class User(db.Model):
     username = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)
 
-    varaukset = db.relationship("Varaus", backref='User', lazy=True)
-    vapaat_ajat = db.relationship("Aika", backref='User', lazy=True)
+    varaukset = db.relationship("Varaus", backref='Kampaaja', lazy=True)
+    vapaat_ajat = db.relationship("Aika", backref='Kampaaja', lazy=True)
     
 
     def __init__(self, name, username, password):
@@ -35,9 +37,9 @@ class User(db.Model):
 
     @staticmethod
     def find_available_times(kampaaja_id):
-        stmt = text("SELECT User.id, Aika.id, Aika.pvm, aika_h, aika_min FROM User"
-                    " LEFT JOIN Aika ON Aika.kampaaja_id = User.id"
-                    " WHERE (User.id = %s AND Aika.vapaa = 1)"
+        stmt = text("SELECT Kampaaja.id, Aika.id, Aika.pvm, aika_h, aika_min FROM Kampaaja"
+                    " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id"
+                    " WHERE (Kampaaja.id = %s AND Aika.vapaa = 1)"
                     " GROUP BY Aika.pvm" % kampaaja_id)
         res = db.engine.execute(stmt)
 
@@ -50,10 +52,10 @@ class User(db.Model):
     @staticmethod
     def find_reservations(kampaaja_id):
         stmt = text("Select varaus.id, aika.pvm, aika.aika_h, aika.aika_min, asiakas.firstName from %s"
-                    " LEFT JOIN Varaus ON Varaus.kampaaja_id = User.id"
+                    " LEFT JOIN Varaus ON Varaus.kampaaja_id = Kampaaja.id"
                     " LEFT JOIN Aika ON Aika.id = Varaus.aika_id "
                     " LEFT JOIN Asiakas ON Asiakas.phoneNumber = Varaus.asiakas_id"
-                    " WHERE (Kampaaja.id = %s)" % ("User" ,kampaaja_id))
+                    " WHERE (Kampaaja.id = %s)" % ("Kampaaja" ,kampaaja_id))
         res = db.engine.execute(stmt)
 
         response = []
@@ -61,5 +63,3 @@ class User(db.Model):
             response.append({"varaus_id":row[0], "aika_pvm":row[1], "aika_h":row[2], "aika_min":row[3], "asiakas_name":row[4]})
 
         return response
-
-        

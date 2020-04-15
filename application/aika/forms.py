@@ -20,7 +20,7 @@ class EditForm(FlaskForm):
         csrf = False
 
 class DeleteTimeForm(FlaskForm):
-    aikaID = BooleanField("AikaID")
+    aika = SubmitField("Poista aika")
 
     class Meta:
         csrf = False
