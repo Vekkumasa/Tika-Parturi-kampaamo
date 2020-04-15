@@ -23,7 +23,7 @@ def kampaaja_show(kampaaja_id):
 @app.route("/kampaaja/<kampaaja_id>/varaukset", methods=["GET"])
 @login_required
 def kampaajan_varaukset(kampaaja_id):
-    return render_template("kampaaja/omat_varaukset.html", kampaaja=User.query.get(kampaaja_id), varaus1=User.find_reservations(kampaaja_id), varaus=User.find_reservations(kampaaja_id))
+    return render_template("kampaaja/omat_varaukset.html", kampaaja=User.query.get(kampaaja_id), varaus=User.find_reservations(kampaaja_id))
 
 @app.route("/kampaaja/", methods=["POST"])
 @login_required

@@ -2,7 +2,8 @@
 
 {% block body %}
 
-    {{ varaus }}
+    {% if varaus is defined %}
+    
     <div class="list-group">
     {% for varaus in varaus %}
     
@@ -19,6 +20,9 @@
         </form>
         
     {% endfor %}
-
+    
+    {% else %}
+    <p>Ei varauksia</p>
+    {% endif %}
 </div>
 {% endblock %}

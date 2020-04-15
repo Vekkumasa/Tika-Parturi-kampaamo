@@ -5,6 +5,9 @@
     Olet tekemässä varausta kampaajalle: <br>
     <b>{{ kampaaja.name }}</b> <br>
     <br>
+
+    {% if pvm != None %}
+
     <h6>Valitse sopiva aika</h6>
 
     <div class="list-group">
@@ -16,4 +19,9 @@
             {% endfor %}
         </ul>
     </div>
+    {% else %}
+
+    <p>Ei vapaita aikoja</p>
+
+    {% endif %}
 {% endblock %}

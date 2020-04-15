@@ -47,19 +47,25 @@ class User(db.Model):
         for row in res:
             response.append({"id":row[0], "aika_id":row[1], "pvm":row[2], "aika_h":row[3], "aika_min":row[4]})
 
+        if len(response) < 1:
+            return None
+        
         return response
 
     @staticmethod
     def find_reservations(kampaaja_id):
         stmt = text("Select varaus.id, aika.pvm, aika.aika_h, aika.aika_min, asiakas.firstName from %s"
-                    " LEFT JOIN Varaus ON Varaus.kampaaja_id = Kampaaja.id"
-                    " LEFT JOIN Aika ON Aika.id = Varaus.aika_id "
-                    " LEFT JOIN Asiakas ON Asiakas.phoneNumber = Varaus.asiakas_id"
+                    " JOIN Varaus ON Varaus.kampaaja_id = Kampaaja.id"
+                    " JOIN Aika ON Aika.id = Varaus.aika_id "
+                    " JOIN Asiakas ON Asiakas.phoneNumber = Varaus.asiakas_id"
                     " WHERE (Kampaaja.id = %s)" % ("Kampaaja" ,kampaaja_id))
         res = db.engine.execute(stmt)
 
         response = []
         for row in res:
             response.append({"varaus_id":row[0], "aika_pvm":row[1], "aika_h":row[2], "aika_min":row[3], "asiakas_name":row[4]})
+
+        if len(response) < 1:
+            return None
 
         return response
