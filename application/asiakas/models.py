@@ -6,10 +6,10 @@ class Asiakas(Base):
 
     __tablename__ = "Asiakas"
 
-    phoneNumber = db.Column(db.String(144), primary_key=True, nullable=False)
+    phonenumber = db.Column(db.String(144), primary_key=True, nullable=False)
     varaukset = db.relationship("Varaus", backref='Asiakas', lazy=True)
 
-    def __init__(self, firstName, lastName, phoneNumber):
+    def __init__(self, firstName, lastName, phonenumber):
         self.firstName = firstName
         self.lastName = lastName
-        self.phoneNumber = phoneNumber
+        self.phonenumber = phonenumber

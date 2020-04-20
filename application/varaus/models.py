@@ -12,7 +12,7 @@ class Varaus(db.Model):
                     onupdate=db.func.current_timestamp())
 
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
-    asiakas_id = db.Column(db.Integer, db.ForeignKey('Asiakas.phoneNumber'), nullable=False)
+    asiakas_id = db.Column(db.Integer, db.ForeignKey('Asiakas.phonenumber'), nullable=False)
     aika_id = db.Column(db.Integer, db.ForeignKey('Aika.id'), nullable=False)
 
     def __init__(self, kampaaja_id, asiakas_id, aika_id):
@@ -24,7 +24,7 @@ class Varaus(db.Model):
     def find_reservations(varaus_id):
         stmt = text("SELECT Varaus.id, Aika.id, Aika.pvm, Aika.aika_h, Aika.aika_min, Asiakas.firstName FROM Varaus"
                     " LEFT JOIN Aika On Aika.id = Varaus.aika_id"
-                    " LEFT JOIN Asiakas ON Asiakas.phoneNumber = Varaus.asiakas_id "
+                    " LEFT JOIN Asiakas ON Asiakas.phonenumber = Varaus.asiakas_id "
                     " WHERE Varaus.id = %s" % varaus_id)
         res = db.engine.execute(stmt)
 

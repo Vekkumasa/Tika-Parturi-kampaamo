@@ -27,12 +27,12 @@ def asiakas_create():
     if not form.validate():
         return render_template("asiakas/newAsiakas.html", form = form)
 
-    asiakas = Asiakas.query.get(form.phoneNumber.data)
+    asiakas = Asiakas.query.get(form.phonenumber.data)
 
     if asiakas:
         return render_template("asiakas/newAsiakas.html", form = form, uniikki = "Puhelinnumero on jo käytössä")
 
-    a = Asiakas(form.firstName.data, form.lastName.data, form.phoneNumber.data)
+    a = Asiakas(form.firstName.data, form.lastName.data, form.phonenumber.data)
 
     db.session().add(a)
     db.session().commit()
@@ -44,7 +44,7 @@ def asiakas_change_number(asiakas_id):
     
     number = request.form.get("number")
     a = Asiakas.query.get(asiakas_id)
-    a.phoneNumber = number
+    a.phonenumber = number
     db.session().commit()
 
     return redirect(url_for("asiakas_index"))
