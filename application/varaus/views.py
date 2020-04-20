@@ -1,7 +1,7 @@
 from flask import redirect, url_for, render_template, request, flash
-from flask_login import login_required
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import User
 from application.varaus.forms import VarausForm, DeleteForm
 from application.varaus.models import Varaus

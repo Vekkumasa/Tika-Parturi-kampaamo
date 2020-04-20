@@ -24,3 +24,8 @@ class DeleteTimeForm(FlaskForm):
 
     class Meta:
         csrf = False
+
+class WorkDayForm(FlaskForm):
+    pvm = DateField('Date', format='%Y-%m-%d')
+    aloitusAika = IntegerField("aloitusAika", validators=[NumberRange(min=9, max=15, message='Aloitusaika oltava 9 ja 15 välillä')])
+    kesto = IntegerField("kesto", validators=[NumberRange(min=1, max=16, message='Arvo 1-16 välillä')])

@@ -23,7 +23,7 @@
           {% if current_user.is_authenticated %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('aika', kampaaja_id=current_user.id) }}"> Lisää vapaa aika </a>
+              <a class="nav-link" href="{{ url_for('aika', kampaaja_id=current_user.id) }}"> Lisää työpäivä </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('omat_ajat', kampaaja_id=current_user.id) }}"> Omat vapaana olevat ajat </a>

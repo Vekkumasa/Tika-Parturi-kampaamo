@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    Kampaaja: {{ kampaaja.name }} <br>
+    <form method="POST" action="{{ url_for('create_aika', kampaaja_id=kampaaja.id) }}">
+        <div class="form-group">
+            <input type="date" class="form-control" id="pvm" name="pvm">
+            <br>
+            <input type="number" class="form-control" placeholder="Työpäivän aloitusaika" id="aloitusAika" name="aloitusAika">
+            <br>
+            <input type="number" class="form-control" placeholder="Työpäivän kesto tunteina" id="kesto" name="kesto">
+            <br>
+            <center>
+            <button type="submit" class="btn btn-success">Lisää!</button>
+            </center>
+          </div>       
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+        {% for message in messages %}
+            {% if "Päivän lisääminen epäonnistui" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+
+            {% if "Päivän lisääminen epäonnistui" in message[1]: %}
+                <div class="alert alert-danger">
+                <strong>Error: </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+{% endblock %}

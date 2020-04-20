@@ -35,12 +35,15 @@ class User(db.Model):
     def is_authenticated(self):
         return True
 
+    def roles(self):
+        return ["ADMIN"]
+
     @staticmethod
     def find_available_times(kampaaja_id):
         stmt = text("SELECT Kampaaja.id, Aika.id, Aika.pvm, aika_h, aika_min FROM Kampaaja"
                     " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id"
                     " WHERE (Kampaaja.id = %s AND Aika.vapaa = 1)"
-                    " GROUP BY Aika.pvm" % kampaaja_id)
+                    " ORDER BY Aika.pvm" % kampaaja_id)
         res = db.engine.execute(stmt)
 
         response = []
