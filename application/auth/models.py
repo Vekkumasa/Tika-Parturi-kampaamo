@@ -40,10 +40,10 @@ class User(db.Model):
 
     @staticmethod
     def find_available_times(kampaaja_id):
-        stmt = text("SELECT Kampaaja.id, Aika.id, Aika.pvm, aika_h, aika_min FROM %s"
-                    " LEFT JOIN Aika ON Aika.kampaaja_id = Kampaaja.id"
-                    " WHERE (Kampaaja.id = %s AND Aika.vapaa = 1)"
-                    " ORDER BY Aika.pvm" % ("Kampaaja" , kampaaja_id))
+        stmt = text("SELECT %s%s, Aika.id, Aika.pvm, aika_h, aika_min FROM %s"
+                    " LEFT JOIN Aika ON Aika.kampaaja_id = %s%s"
+                    " WHERE (%s%s = %s AND Aika.vapaa = 1)"
+                    " ORDER BY Aika.pvm" % ("Kampaaja","(id)", "Kampaaja", "Kampaaja","(id)", "Kampaaja","(id)", kampaaja_id))
         res = db.engine.execute(stmt)
 
         response = []
