@@ -6,7 +6,7 @@ from wtforms.validators import Length, NumberRange, DataRequired
 class VarausForm(FlaskForm):
     firstName = StringField("Etunimi", [validators.Length(min=3)])
     lastName = StringField("Sukunini", [validators.Length(min=3)])
-    phonenumber = StringField("Puhelinnumero", [validators.Length(min=3)])
+    phoneNumber = IntegerField("Puhelinnumero", [validators.NumberRange(min=100)])
     submit = SubmitField("Submit")
     class Meta:
         csrf = False

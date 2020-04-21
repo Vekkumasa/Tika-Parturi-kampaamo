@@ -37,9 +37,9 @@ def create_varaus(kampaaja_id, aika_id):
 
     form = VarausForm(request.form)
 
-    a = Asiakas.query.get(form.phonenumber.data)
+    a = Asiakas.query.get(form.phoneNumber.data)
     if not a:
-        a = Asiakas(form.firstName.data, form.lastName.data, form.phonenumber.data)
+        a = Asiakas(form.firstName.data, form.lastName.data, form.phoneNumber.data)
 
         if form.validate():
             db.session.add(a)
@@ -52,11 +52,9 @@ def create_varaus(kampaaja_id, aika_id):
     aika = Aika.query.get(aika_id)
     aika.vapaa = False
 
-    v = Varaus(kampaaja_id, a.phonenumber, aika.id)
+    v = Varaus(kampaaja_id, a.phoneNumber, aika.id)
 
     db.session.add(v)
     db.session.commit()
 
     return render_template("varaus/varausformi.html", kampaaja = kampaaja_id, aika = aika_id, form = form)
-
-
