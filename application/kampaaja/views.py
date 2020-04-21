@@ -18,7 +18,7 @@ def kampaaja_form():
 
 @app.route("/kampaaja/<kampaaja_id>", methods=["GET"])
 def kampaaja_show(kampaaja_id):
-    return render_template("kampaaja/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id), pvm=User.find_available_times(kampaaja_id), form = VarausForm())
+    return render_template("kampaaja/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id),  form = VarausForm())
 
 @app.route("/kampaaja/<kampaaja_id>/varaukset", methods=["GET"])
 @login_required
