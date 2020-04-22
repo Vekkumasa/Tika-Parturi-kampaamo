@@ -35,7 +35,7 @@ def kampaaja_create():
         flash('Kampaajan lisääminen epäonnistui')
         return render_template("kampaaja/newKampaaja.html", form = form)
 
-    k = Kampaaja(form.name.data, form.username.data, form.password.data)
+    k = User(form.name.data, form.username.data, form.password.data)
 
     db.session().add(k)
     db.session().commit()
