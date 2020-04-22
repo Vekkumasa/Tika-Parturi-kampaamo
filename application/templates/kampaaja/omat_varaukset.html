@@ -3,16 +3,24 @@
 {% block body %}
     Nimi: {{ kampaaja.name }} <br>    
     
+    {% if varaus != None %}
+
     <h6>Omat varaukset</h6>
 
     <div class="list-group">
-        <table>
+        <ul>
             {% for varaus in varaus %}
-            <tr>
+            <li>
                 <a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('varaus_crud', varaus_id = varaus.varaus_id, kampaaja_id = kampaaja.id) }}"> {{ varaus.aika_pvm }} &nbsp; Klo: {{ varaus.aika_h }}.{{ varaus.aika_min }} &nbsp; <b>{{ varaus.asiakas_name }}</b></a>
-            </tr>
+            </li>
             {% endfor %}
-        </table>
+        </ul>
     </div>
+
+    {% else %}
+
+    <p>Ei varauksia</p>
+
+    {% endif %}
 
 {% endblock %}

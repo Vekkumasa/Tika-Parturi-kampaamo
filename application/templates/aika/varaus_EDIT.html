@@ -2,7 +2,7 @@
 {% block body %}
 
 {% for varaus in varaus %}
-    Varaus: {{ varaus.id }}<b>{{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; {{ varaus.asiakas_name }}</b> 
+    <b>{{ varaus.aika_pvm }} &nbsp; {{ varaus.aika_h }}{{ varaus.aika_min }} &nbsp; {{ varaus.asiakas_name }}</b> 
 
     <form method="POST" action="{{ url_for('muokkaa_varausta', kampaaja_id=kampaaja.id, varaus_id=varaus.id, aika_id = varaus.aika_id) }}">
         <div class="form-group">
