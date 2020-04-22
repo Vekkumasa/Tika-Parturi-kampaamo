@@ -58,11 +58,11 @@ class User(db.Model):
 
     @staticmethod
     def find_reservations(kampaaja_id):
-        stmt = text("Select varaus.id, aika.pvm, aika.aika_h, aika.aika_min, asiakas.firstName from %s"
-                    " JOIN Varaus ON Varaus.kampaaja_id = Kampaaja.id"
-                    " JOIN Aika ON Aika.id = Varaus.aika_id "
-                    " JOIN Asiakas ON Asiakas.phoneNumber = Varaus.asiakas_id"
-                    " WHERE (Kampaaja.id = %s)" % ("Kampaaja" ,kampaaja_id))
+        stmt = text(' SELECT "Varaus".id, "Aika".pvm, "Aika".aika_h, "Aika".aika_min, "Asiakas".firstName FROM "Kampaaja" '
+                    ' JOIN "Varaus" ON "Varaus".kampaaja_id = "Kampaaja".id '
+                    ' JOIN "Aika" ON "Aika".id = "Varaus".aika_id '
+                    ' JOIN "Asiakas" ON "Asiakas".phoneNumber = "Varaus".asiakas_id '
+                    ' WHERE ("Kampaaja".id = %s) ' % (kampaaja_id))
         res = db.engine.execute(stmt)
 
         response = []

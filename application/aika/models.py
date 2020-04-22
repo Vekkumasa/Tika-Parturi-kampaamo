@@ -23,7 +23,7 @@ class Aika(db.Model):
 
     @staticmethod
     def vapaat_ajat(kampaaja_id):
-        stmt = text("SELECT * FROM Aika WHERE vapaa=1 AND Kampaaja_id = %s" % kampaaja_id)
+        stmt = text(' SELECT * FROM "Aika" WHERE "Aika".vapaa = 1 AND "Aika".kampaaja_id = %s '  % kampaaja_id)
         res = db.engine.execute(stmt)
 
         response = []
