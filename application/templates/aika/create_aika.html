@@ -2,13 +2,13 @@
 
 {% block body %}
     Kampaaja: {{ kampaaja.name }} <br>
-    <form method="POST" action="{{ url_for('aika', kampaaja_id=kampaaja.id) }}">
+    <form method="POST" action="{{ url_for('create_vapaa_aika', kampaaja_id=kampaaja.id) }}">
         <div class="form-group">
             <input type="date" class="form-control" id="pvm" name="pvm">
             <br>
-            <input type="number" class="form-control" id="aika_h" name="aika_h">
+            <input type="number" class="form-control" placeholder="Tunnit (0-23)" id="aika_h" name="aika_h">
             <br>
-            <input type="number" class="form-control" id="aika_min" name="aika_min">
+            <input type="number" class="form-control" placeholder="Minuutit (0-60)" id="aika_min" name="aika_min">
             <br>
             <center>
             <button type="submit" class="btn btn-success">Lisää!</button>

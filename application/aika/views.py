@@ -46,9 +46,9 @@ def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
     flash('Aika muutettu: {} {} {}'.format(form.pvm.data, form.aika_h.data, form.aika_min.data))
     return redirect(url_for("varaus_muokkaus", kampaaja_id=kampaaja_id, aika_id = aika_id, varaus_id = varaus_id))
 
-@app.route("/kampaaja/<kampaaja_id>/aika", methods=["GET"])
+@app.route("/kampaaja/<kampaaja_id>/tyopaiva", methods=["GET"])
 @login_required
-def aika(kampaaja_id):
+def tyopaiva(kampaaja_id):
     return render_template("aika/create_workday.html", kampaaja=User.query.get(kampaaja_id), form = WorkDayForm())
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/muokkaa/<aika_id>", methods=["GET"])
@@ -56,24 +56,29 @@ def aika(kampaaja_id):
 def varaus_muokkaus(varaus_id, kampaaja_id, aika_id):
     return render_template("aika/varaus_EDIT.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.find_reservations(varaus_id), aika = Aika.query.get(aika_id), form = EditForm())
 
-#@app.route("/kampaaja/<kampaaja_id>/aika", methods=["POST"])
-#@login_required
-#def create_aika(kampaaja_id):
-#
-#    form = AikaForm(request.form)
-#
-#    if not form.validate():
-#        flash('Ajan lisääminen epäonnistui')
-#        return render_template("aika/create_workday.html", kampaaja = kampaaja_id ,form = AikaForm)
-#
-#    a = Aika(form.pvm.data, form.aika_h.data, form.aika_min.data, kampaaja_id)
-#    db.session.add(a)
-#    db.session.commit()
-#
-#    flash('Aika lisätty: {} {} {}'.format(form.pvm.data, form.aika_h.data, form.aika_min.data))
-#    return redirect(url_for("create_workday", kampaaja_id=kampaaja_id))
+@app.route("/kampaaja/<kampaaja_id>/aika", methods=["GET"])
+@login_required
+def aika(kampaaja_id):
+    return render_template("aika/create_aika.html", kampaaja=User.query.get(kampaaja_id), form = AikaForm())
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["POST"])
+@login_required
+def create_vapaa_aika(kampaaja_id):
+
+    form = AikaForm(request.form)
+
+    if not form.validate():
+        flash('Ajan lisääminen epäonnistui')
+        return render_template("aika/create_aika.html", kampaaja = kampaaja_id ,form = AikaForm)
+
+    a = Aika(form.pvm.data, form.aika_h.data, form.aika_min.data, kampaaja_id)
+    db.session.add(a)
+    db.session.commit()
+
+    flash('Aika lisätty: {} {} {}'.format(form.pvm.data, form.aika_h.data, form.aika_min.data))
+    return redirect(url_for("aika", kampaaja_id=kampaaja_id))
+
+@app.route("/kampaaja/<kampaaja_id>/tyopaiva", methods=["POST"])
 @login_required
 def create_aika(kampaaja_id):
 
