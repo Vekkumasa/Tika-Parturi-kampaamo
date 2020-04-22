@@ -21,9 +21,9 @@ class Varaus(db.Model):
 
     @staticmethod
     def find_reservations(varaus_id):
-        stmt = text(' SELECT "Varaus".id, "Aika".id, "Aika".pvm, "Aika".aika_h, "Aika".aika_min, "Asiakas".firstName FROM "Varaus" '
+        stmt = text(' SELECT "Varaus".id, "Aika".id, "Aika".pvm, "Aika".aika_h, "Aika".aika_min, "Asiakas"."firstName" FROM "Varaus" '
                     ' LEFT JOIN "Aika" On "Aika".id = "Varaus".aika_id '
-                    ' LEFT JOIN "Asiakas" ON "Asiakas".phoneNumber = "Varaus".asiakas_id '
+                    ' LEFT JOIN "Asiakas" ON "Asiakas"."phoneNumber" = "Varaus".asiakas_id '
                     ' WHERE "Varaus".id = %s' % varaus_id)
         res = db.engine.execute(stmt)
 
