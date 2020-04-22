@@ -20,7 +20,7 @@ def varaus_crud(kampaaja_id, varaus_id):
 def poista_varaus(varaus_id, kampaaja_id):
     v = Varaus.query.get(varaus_id)
     a = Aika.query.get(v.aika_id)
-    a.vapaa = True
+    a.vapaa = 1
     db.session.delete(v)
     db.session.commit()
 
@@ -50,7 +50,7 @@ def create_varaus(kampaaja_id, aika_id):
     
 
     aika = Aika.query.get(aika_id)
-    aika.vapaa = False
+    aika.vapaa = 0
 
     v = Varaus(kampaaja_id, a.phoneNumber, aika.id)
 

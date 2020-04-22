@@ -9,7 +9,7 @@ class Aika(db.Model):
     pvm = db.Column(db.Date)
     aika_h = db.Column(db.Integer)
     aika_min = db.Column(db.Integer)
-    vapaa = db.Column(db.Boolean, nullable=False)
+    vapaa = db.Column(db.Integer, nullable=False)
 
     kampaaja_id = db.Column(db.Integer, db.ForeignKey('Kampaaja.id'), nullable=False)
     varaus = db.relationship("Varaus", backref="Aika", lazy=True)
@@ -19,7 +19,7 @@ class Aika(db.Model):
         self.aika_h = aika_h
         self.aika_min = aika_min
         self.kampaaja_id = kampaaja_id
-        self.vapaa = True
+        self.vapaa = 1
 
     @staticmethod
     def vapaat_ajat(kampaaja_id):
