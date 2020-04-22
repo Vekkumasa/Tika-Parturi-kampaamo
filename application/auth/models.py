@@ -41,10 +41,7 @@ class User(db.Model):
     @staticmethod
     def find_available_times(kampaaja_id):
 
-        stmt = text('SELECT "Kampaaja".id, "Aika".id, "Aika".pvm, "Aika".aika_h, "Aika".aika_min FROM "Kampaaja"'
-                    ' LEFT JOIN "Aika" ON "Aika".kampaaja_id = "Kampaaja".id'
-                    ' WHERE ("Kampaaja".id = %s AND Aika.vapaa = 1)'
-                    ' ORDER BY "Aika".pvm' % (kampaaja_id))
+        stmt = text(' SELECT "Kampaaja".id, "Aika".id, "Aika".pvm, "Aika".aika_h, "Aika".aika_min FROM "Kampaaja" LEFT JOIN "Aika" ON "Aika".kampaaja_id = "Kampaaja".id WHERE ("Kampaaja".id = %s AND Aika.vapaa = 1) ORDER BY "Aika".pvm' % (kampaaja_id))
         res = db.engine.execute(stmt)
 
         response = []
