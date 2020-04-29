@@ -5,7 +5,7 @@ from wtforms.validators import Length, NumberRange, DataRequired
 
 class AikaForm(FlaskForm):
     pvm = DateField('Date', format='%Y-%m-%d')
-    aika_h = IntegerField("Hour", validators=[NumberRange(min=0, max=24, message='Arvo 0-24 välillä')])
+    aika_h = IntegerField("Hour", validators=[NumberRange(min=0, max=23, message='Arvo 0-23 välillä')])
     aika_min = IntegerField("Minutes", validators=[NumberRange(min=0, max=60, message='Arvo 0-60 välillä')])
 
     class Meta:
@@ -13,7 +13,7 @@ class AikaForm(FlaskForm):
 
 class EditForm(FlaskForm):
     pvm = DateField('Date', format='%Y-%m-%d')
-    aika_h = IntegerField("Hour", validators=[NumberRange(min=0, max=24, message='Arvo 0-24 välillä')])
+    aika_h = IntegerField("Hour", validators=[NumberRange(min=0, max=23, message='Arvo 0-23 välillä')])
     aika_min = IntegerField("Minutes", validators=[NumberRange(min=0, max=60, message='Arvo 0-60 välillä')])
 
     class Meta:

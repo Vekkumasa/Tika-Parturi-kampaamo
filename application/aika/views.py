@@ -84,9 +84,9 @@ def create_aika(kampaaja_id):
 
     form = WorkDayForm(request.form)
 
-#    if not form.validate():
-#        flash('Päivän lisääminen epäonnistui')
-#        return render_template("aika/create_workday.html", kampaaja = User.query.get(kampaaja_id) ,form = WorkDayForm)
+    if not form.validate():
+        flash('Päivän lisääminen epäonnistui')
+        return render_template("aika/create_workday.html", kampaaja = User.query.get(kampaaja_id) ,form = WorkDayForm)
 
     pvm = form.pvm.data
     h = form.aloitusAika.data
