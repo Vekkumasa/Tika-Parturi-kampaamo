@@ -22,9 +22,13 @@
 </div>
 
 </br>
+
+{% if varaukset != None %}
+
 <p class="bg-info">Asiakkaiden varaukset yhteensä: {{ varaukset }}</p>
 
-
-  
+{% else %}
+    <p></p>
+{% endif %}
 
 {% endblock %}

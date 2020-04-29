@@ -22,8 +22,7 @@ class Asiakas(db.Model):
     @staticmethod
     def count_of_customers_with_reservations():
         stmt = text(' SELECT COUNT(*) AS varauksia FROM "Asiakas"'
-                    ' JOIN "Varaus" ON "Varaus"."asiakas_id" = "Asiakas"."phoneNumber"'
-                    ' GROUP BY "Asiaskas"."lastName";')
+                    ' JOIN "Varaus" ON "Varaus"."asiakas_id" = "Asiakas"."phoneNumber";')
 
         res = db.engine.execute(stmt)
 
