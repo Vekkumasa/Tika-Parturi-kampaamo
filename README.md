@@ -13,7 +13,9 @@ Vain kampaaja kenelle on varaus tehty voi muokata varauksen ajankohtaa.
 [Linkki jatkokehitykseen](https://github.com/Vekkumasa/Tika-Parturi-kampaamo/blob/master/documentation/jatkokehitys.md)
 
 [Linkki asennusohjeisiin](https://github.com/Vekkumasa/Tika-Parturi-kampaamo/blob/master/documentation/asennusohje.md)
+
 Herokussa on tunnukset:
+
 `"Hello world" username: "hello" password "world"`
 `"Saksikäsi-Edward" username: "saksikäsi" password: "edward"`
 
