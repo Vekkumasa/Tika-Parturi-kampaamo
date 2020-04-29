@@ -13,7 +13,7 @@ from application.asiakas.models import Asiakas
 
 @app.route("/asiakas/", methods=["GET"])
 def asiakas_index():
-    return render_template("asiakas/asiakkaat.html", asiakkaat=Asiakas.query.all())
+    return render_template("asiakas/asiakkaat.html", asiakkaat=Asiakas.query.all(), varaukset=Asiakas.count_of_customers_with_reservations())
 
 @app.route("/asiakas/new/")
 def asiakas_form():

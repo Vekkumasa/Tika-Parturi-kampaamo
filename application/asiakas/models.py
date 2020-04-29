@@ -18,3 +18,17 @@ class Asiakas(db.Model):
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
+
+    @staticmethod
+    def count_of_customers_with_reservations():
+        stmt = text(' SELECT COUNT(*) AS varauksia FROM "Asiakas"'
+                    ' JOIN "Varaus" ON "Varaus".asiakas_id = "Asiakas".phoneNumber'
+                    ' GROUP BY "Asiaskas.lastName"')
+
+        res = db.engine.execute(stmt)
+
+        response = None
+        for row in res:
+            response = list(row)
+
+        return response

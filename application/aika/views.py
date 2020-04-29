@@ -80,12 +80,12 @@ def create_vapaa_aika(kampaaja_id):
 
 @app.route("/kampaaja/<kampaaja_id>/tyopaiva", methods=["POST"])
 @login_required
-def create_aika(kampaaja_id):
+def create_workday(kampaaja_id):
 
     form = WorkDayForm(request.form)
 
     if not form.validate():
-        flash('Päivän lisääminen epäonnistui')
+        flash('Aloitusaika arvot 0-23 välillä, työpäivän kesto 1-9')
         return render_template("aika/create_workday.html", kampaaja = User.query.get(kampaaja_id) ,form = WorkDayForm)
 
     pvm = form.pvm.data
@@ -106,4 +106,4 @@ def create_aika(kampaaja_id):
         i += 1
     
     flash('Työpäivä lisätty: {} {} {}'.format(form.pvm.data, form.aloitusAika.data, form.kesto.data))
-    return redirect(url_for("create_aika", kampaaja_id=kampaaja_id))
+    return redirect(url_for("create_workday", kampaaja_id=kampaaja_id))

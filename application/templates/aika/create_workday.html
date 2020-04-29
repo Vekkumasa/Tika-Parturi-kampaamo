@@ -2,13 +2,28 @@
 
 {% block body %}
     Kampaaja: {{ kampaaja.name }} <br>
-    <form method="POST" action="{{ url_for('create_aika', kampaaja_id=kampaaja.id) }}">
+    <form method="POST" action="{{ url_for('create_workday', kampaaja_id=kampaaja.id) }}">
         <div class="form-group">
             <input type="date" class="form-control" id="pvm" name="pvm">
+            <ul>
+                {% for error in form.pvm.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
             <br>
             <input type="number" class="form-control" placeholder="Työpäivän aloitusaika" id="aloitusAika" name="aloitusAika">
+            <ul>
+                {% for error in form.aloitusAika.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
             <br>
             <input type="number" class="form-control" placeholder="Työpäivän kesto tunteina" id="kesto" name="kesto">
+            <ul>
+                {% for error in form.kesto.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
             <br>
             <center>
             <button type="submit" class="btn btn-success">Lisää!</button>
@@ -20,13 +35,13 @@
             {% if messages %}
 
         {% for message in messages %}
-            {% if "Päivän lisääminen epäonnistui" not in message[1]: %}
+            {% if "Aloitusaika arvot 0-23 välillä, työpäivän kesto 1-9" not in message[1]: %}
                 <div class="alert alert-info">
                 <strong>Success! </strong> {{ message[1] }}
                 </div>
             {% endif %}
 
-            {% if "Päivän lisääminen epäonnistui" in message[1]: %}
+            {% if "Aloitusaika arvot 0-23 välillä, työpäivän kesto 1-9" in message[1]: %}
                 <div class="alert alert-danger">
                 <strong>Error: </strong> {{ message[1] }}
                 </div>

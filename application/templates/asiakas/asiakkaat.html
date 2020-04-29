@@ -2,6 +2,7 @@
 
 {% block body %}
 <div class="list-group">
+
     <table>
         <tr>
             <th>First name &nbsp;</th>
@@ -15,7 +16,15 @@
             <td><a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.lastName }}</a></td>
             <td><a class="list-group-item list-group-item-action list-group-item-info" href="{{ url_for('asiakas_show', asiakas_id=asiakas.id) }}"> {{ asiakas.phoneNumber }}</a></td>
         </tr>
+        
         {% endfor %}
     </table>
 </div>
+
+</br>
+<p class="bg-info">Asiakkaiden varaukset yhteensä: {{ varaukset }}</p>
+
+
+  
+
 {% endblock %}
