@@ -12,7 +12,7 @@ def kampaaja_index():
     return render_template("kampaaja/list.html", kampaajat=User.query.all())
 
 @app.route("/kampaaja/new/")
-@login_required
+@login_required(role="ADMIN")
 def kampaaja_form():
     return render_template("kampaaja/newKampaaja.html", form = KampaajaForm())
 
@@ -21,12 +21,12 @@ def kampaaja_show(kampaaja_id):
     return render_template("kampaaja/singleKampaaja.html", kampaaja=User.query.get(kampaaja_id), pvm=User.find_available_times(kampaaja_id), form = VarausForm())
 
 @app.route("/kampaaja/<kampaaja_id>/varaukset", methods=["GET"])
-@login_required
+@login_required(role="ADMIN")
 def kampaajan_varaukset(kampaaja_id):
     return render_template("kampaaja/omat_varaukset.html", kampaaja=User.query.get(kampaaja_id), varaus=User.find_reservations(kampaaja_id))
 
 @app.route("/kampaaja/", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def kampaaja_create():
 
     form = KampaajaForm(request.form)

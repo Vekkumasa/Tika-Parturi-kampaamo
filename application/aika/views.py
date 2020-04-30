@@ -12,12 +12,12 @@ from application.asiakas.models import Asiakas
 from application.asiakas.forms import AsiakasForm
 
 @app.route("/kampaaja/<kampaaja_id>/vapaat_ajat", methods=["GET"])
-@login_required
+@login_required(role="ADMIN")
 def omat_ajat(kampaaja_id):
     return render_template("aika/omat_ajat.html", kampaaja = User.query.get(kampaaja_id), aika = Aika.vapaat_ajat(kampaaja_id), form = DeleteTimeForm())
 
 @app.route("/kampaaja/<kampaaja_id>/vapaat_ajat/<aika_id>", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def poista_vapaa_aika(kampaaja_id, aika_id):
 
     aika = Aika.query.get(aika_id)
@@ -27,7 +27,7 @@ def poista_vapaa_aika(kampaaja_id, aika_id):
     return redirect(url_for("omat_ajat", kampaaja_id=kampaaja_id))
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/muokkaa/<aika_id>", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
 
     form = EditForm(request.form)
@@ -47,22 +47,22 @@ def muokkaa_varausta(varaus_id, kampaaja_id, aika_id):
     return redirect(url_for("varaus_muokkaus", kampaaja_id=kampaaja_id, aika_id = aika_id, varaus_id = varaus_id))
 
 @app.route("/kampaaja/<kampaaja_id>/tyopaiva", methods=["GET"])
-@login_required
+@login_required(role="ADMIN")
 def tyopaiva(kampaaja_id):
     return render_template("aika/create_workday.html", kampaaja=User.query.get(kampaaja_id), form = WorkDayForm())
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/muokkaa/<aika_id>", methods=["GET"])
-@login_required
+@login_required(role="ADMIN")
 def varaus_muokkaus(varaus_id, kampaaja_id, aika_id):
     return render_template("aika/varaus_EDIT.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.find_reservations(varaus_id), aika = Aika.query.get(aika_id), form = EditForm())
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["GET"])
-@login_required
+@login_required(role="ADMIN")
 def aika(kampaaja_id):
     return render_template("aika/create_aika.html", kampaaja=User.query.get(kampaaja_id), form = AikaForm())
 
 @app.route("/kampaaja/<kampaaja_id>/aika", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def create_vapaa_aika(kampaaja_id):
 
     form = AikaForm(request.form)
@@ -79,7 +79,7 @@ def create_vapaa_aika(kampaaja_id):
     return redirect(url_for("aika", kampaaja_id=kampaaja_id))
 
 @app.route("/kampaaja/<kampaaja_id>/tyopaiva", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def create_workday(kampaaja_id):
 
     form = WorkDayForm(request.form)

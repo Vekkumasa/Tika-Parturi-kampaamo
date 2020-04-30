@@ -11,12 +11,12 @@ from application.asiakas.forms import AsiakasForm
 from application.asiakas.models import Asiakas
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>", methods=["GET"])
-@login_required
+@login_required(role="ADMIN")
 def varaus_crud(kampaaja_id, varaus_id):
     return render_template("varaus/varaus_CRUD.html", kampaaja=User.query.get(kampaaja_id), varaus=Varaus.find_reservations(varaus_id), form = DeleteForm)
 
 @app.route("/kampaaja/<kampaaja_id>/<varaus_id>/", methods=["POST"])
-@login_required
+@login_required(role="ADMIN")
 def poista_varaus(varaus_id, kampaaja_id):
     v = Varaus.query.get(varaus_id)
     a = Aika.query.get(v.aika_id)
